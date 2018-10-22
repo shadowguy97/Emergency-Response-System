@@ -1,0 +1,13 @@
+input[type="radio"] {
+    display:none;
+}
+input[type=radio] + label {
+    background: url('../img/check1.png') left top no-repeat;
+    display: block;
+    min-height: 25px;
+    padding-left: 35px;
+}
+
+input[type=radio]:checked + label {
+    background: url('../img/check2.png') left top no-repeat;
+}

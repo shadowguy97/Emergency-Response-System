@@ -1,0 +1,23 @@
+body {
+    background: url('/assets/img/14.jpg') no-repeat fixed center center;
+    background-size: cover;
+    background-color: rgba(52,254,20,0.29);
+    overflow: hidden;
+}
+
+
+#login {
+    position: relative;
+    top:110px;
+    left:25%;
+    max-width: 50%;
+    overflow: hidden;
+    background: white;
+    border-radius: 10%;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-top-color: black;
+    border-bottom-color: black;
+
+}
+
