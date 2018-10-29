@@ -28,14 +28,13 @@
     <div class="col-md-12">
         <nav class="navbar navbar-default custom-header">
             <div class="container-fluid">
-                <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">Company<span>logo </span> </a>
+                <div class="navbar-header">
                     <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav navbar-right links">
-                        <li role="presentation"><a href="index.html">Home </a></li>
-                        <li role="presentation"><a href="register.html">Register </a></li>
-                        <li role="presentation"><a href="login.html">Login </a></li>
+                        <li role="presentation"><a href="index.php">Home </a></li>
+                        <li role="presentation"><a href="login.php">Login </a></li>
                     </ul>
                 </div>
             </div>
@@ -44,10 +43,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron hero-technology">
-                <h1 class="hero-title">Emergency Response Service.</h1>
-                <p class="hero-subtitle">This site is made so as to help people report emergency situations in any and every situations. <br>
-                Please click the button below to report any emergency</p>
-                <p><a class="btn btn-primary btn-lg hero-button" role="button" href="report.html">Report Emergency</a></p>
+                <h1 class="hero-title">Emergency Response System.</h1>
+                <p class="hero-subtitle">This site is made so as to help manage reported emergency situations and various Emergency Service Provider. <br>
+                Please click the button below to Login</p>
+                <p><a class="btn btn-primary btn-lg hero-button" role="button" href="login.php">Login</a></p>
             </div>
         </div>
     </div>

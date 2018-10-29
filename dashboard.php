@@ -1,5 +1,8 @@
 <?php 
-$stat = "active";
+session_start();
+$var = "dash";
+
+
 ?>
 
 <!doctype html>
@@ -18,8 +21,9 @@ $stat = "active";
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Animation library for notifications   -->
-    <link href="assets/css/animate.min.css" rel="stylesheet"/>
+
+    <!-- Data Table -->
+    <link rel="stylesheet" href="assets/css/datatables.css">
 
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
@@ -27,8 +31,8 @@ $stat = "active";
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/fonts/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="assets/fonts/font-awesome.min.css" rel="stylesheet" />
 
 
 </head>
@@ -39,6 +43,7 @@ $stat = "active";
     <?php include 'sidebar.php';?>
     <!-- sidebar end -->
 
+    <!-- main panel starts -->
     <div class="main-panel">
         <!-- navbar start -->
         <nav class="navbar navbar-default navbar-fixed">
@@ -85,27 +90,70 @@ $stat = "active";
         <!-- contents and every other thing goes here -->
         <div class="content">
             <div class="container-fluid">
-                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Distress Calls</h4>
+                            </div>
+
+                            <div class="content">
+                                <div class="table-responsive">
+                                        <table class="table table-hover" id="ems">
+                                            <thead>
+                                                <tr class="info">
+                                                    <th>#</th>
+                                                    <th>Emergency type</th>
+                                                    <th>Location</th>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                    <th>Responded</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Fire</td>
+                                                    <td>Kuti</td>
+                                                    <td>12/11/1995</td>
+                                                    <td>5:04 PM</td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+    </div> <!-- main panel ends -->
+
 </div>
-</div>
+
 
 
 </body>
 
 <!--   Core JS Files   -->
-<script src="assets/js/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="assets/js/jquery.min.js" type="text/javascript"></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
-<!--  Checkbox, Radio & Switch Plugins -->
-<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
-
-<!--  Notifications Plugin    -->
-<script src="assets/js/bootstrap-notify.js"></script>
+<!-- Data tables -->
+<script src="assets/js/datatables.js"></script>
 
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
+<!-- sweet alerts -->
+<script src="assets/js/sweetalert.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+        $('#ems').DataTable();
+    });
+</script>
 </html>
