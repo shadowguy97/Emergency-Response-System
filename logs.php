@@ -1,21 +1,27 @@
-<?php 
+<?php
 /**
  * User: Pelumi
  * Date: 29/10/18
  * Time: 3:20 PM
  */
 
-session_start();
+ session_start(); 
 require_once 'local_config.php';
 
-$var = "dash";
-
+$var = "logs";
+/*
+$query = 'SELECT * FROM operators';
+$response = @mysqli_query($dbc, $query);
+$request = "SELECT * FROM operators WHERE id='$page'"
+$reply = @mysqli_query($dbc, $request);
+*/
 ?>
 
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+
 <head>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
@@ -41,8 +47,8 @@ $var = "dash";
     <link href="assets/fonts/pe-icon-7-stroke.css" rel="stylesheet" />
     <link href="assets/fonts/font-awesome.min.css" rel="stylesheet" />
 
-
 </head>
+
 <body>
 
 <div class="wrapper">
@@ -62,7 +68,7 @@ $var = "dash";
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="dashboard.php">Dashboard</a>
+                    <a class="navbar-brand" href="logs.php">Emergency logs</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -101,7 +107,7 @@ $var = "dash";
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Distress Calls</h4>
+                                <h4 class="title">Emergency Logs</h4>
                             </div>
 
                             <div class="content">
