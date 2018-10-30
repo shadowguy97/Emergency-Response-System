@@ -31,6 +31,12 @@
                         <p>Emergency Logs</p>
                     </a>
                 </li>   
+                <li class="<?php if($var == 'admin'){ echo "active";} ?>">
+                    <a href="logs.php">
+                        <i class="fa fa-user"></i>
+                        <p>Admins</p>
+                    </a>
+                </li>   
             </ul>
         </div>
     </div>

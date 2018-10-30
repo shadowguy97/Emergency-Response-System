@@ -1,3 +1,15 @@
+<?php
+require_once 'local_config.php';
+session_start();
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if(isset($_POST['login'])){
+        require 'formsHandle.php';
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -33,7 +45,8 @@
     <div class="col-md-12">
         <div class="login-card"><img src="assets/img/avatar_2x.png" class="profile-img-card">
             <p class="profile-name-card"> </p>
-            <form class="form-signin"><span class="reauth-email"> </span>
+            <form  class="form-signin" action="log.php" method="post" id="loginForm" name="loginForm">
+                <span class="reauth-email"> </span>
                 <input class="form-control" type="email" required="" placeholder="Staff ID" autofocus="" id="inputEmail">
                 <input class="form-control" type="password" required="" placeholder="Password" id="inputPassword">
                 <div class="checkbox">
