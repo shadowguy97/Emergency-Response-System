@@ -8,7 +8,19 @@
 session_start();
 require_once 'local_config.php';
 
-$var = "dash";
+$var = "admin";
+
+$rootID = 0;
+$query = 'SELECT COUNT(*) FROM admin;';
+$response = @mysqli_query($dbc, $query);
+$data = mysqli_fetch_assoc($response);
+if($data == 0) {
+    $rootID = 100001;
+}
+else{
+    $data = $data + 100001;
+    $rootID = $data;
+}
 
 ?>
 
@@ -28,9 +40,6 @@ $var = "dash";
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Form CSS     -->
-    <link rel="stylesheet" href="assets/css/Pretty-Registration-Form.css">
-
     <!-- Data Table -->
     <link rel="stylesheet" href="assets/css/datatables.css">
 
@@ -43,9 +52,106 @@ $var = "dash";
     <link href="assets/fonts/pe-icon-7-stroke.css" rel="stylesheet" />
     <link href="assets/fonts/font-awesome.min.css" rel="stylesheet" />
 
+    <!-- sweet alerts -->
+    <script src="assets/js/sweetalert.min.js"></script>
 
 </head>
 <body>
+<script language="javascript" type="text/javascript">
+
+    function checkForm()
+    {
+        if(document.adminForm.fName.value == '') {
+            try {
+            swal('Error', 'Please fill your first name field.', 'error');
+            } catch (err) {
+                alert( "Please fill your first name field.");
+            }
+            document.adminForm.fName.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
+        if(document.adminForm.lName.value == '') {
+            try {
+            swal('Error', 'Please fill your last name field.', 'error');
+            } catch (err) {
+                alert( "Please fill your last name field.");
+            }
+            document.adminForm.lName.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
+        if(document.adminForm.email.value == '') {
+            try {
+            swal('Error', 'Please fill in your email address.', 'error');
+            } catch (err) {
+                alert( "Please fill in your email address.");
+            }
+            document.adminForm.email.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
+        if (document.adminForm.phone.value == '') {
+            try {
+            swal('Error', 'Please input your phone number.', 'error');
+            } catch (err) {
+                alert( "Please input your phone number.");
+            }
+            document.adminForm.phone.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
+        if (document.adminForm.SID.value == '') {
+            try {
+            swal('Error', 'Staff ID is empty.', 'error');
+            } catch (err) {
+                alert( "Staff ID is empty.");
+            }
+            document.adminForm.SID.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
+        if(document.adminForm.pass.value == "") {
+            try {
+            swal('Error', 'Please enter your password', 'error');
+            } catch (err) {
+                alert( "Please enter your password");
+            }
+            document.adminForm.pass.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
+        if(document.adminForm.rpass.value == "") {
+            try {
+            swal('Error', 'Please repeat your password', 'error');
+            } catch (err) {
+                alert( "Please repaet your password");
+            }
+            document.adminForm.rpass.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
+        if(document.adminForm.pass.value != document.adminForm.rpass.value) {
+            try {
+            swal('Error', 'Password do not match', 'error');
+            } catch (err) {
+                alert( "Password do not match");
+            }
+            document.adminForm.rpass.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
+        return true;
+    }
+</script>
 
 <div class="wrapper">
     <!-- sidebar start -->
@@ -103,57 +209,72 @@ $var = "dash";
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Distress Calls</h4>
+                                <h4 class="title">Registeration Form for new Admin</h4>
                             </div>
 
                             <div class="content">
-                                <form class="form-horizontal custom-form">
-                                    <h1>Registeration Form for new Admin</h1>
+                                <form method="post" action="formsHandle.php" name="adminForm" id="adminForm" onsubmit="return(checkForm());">
+                                <input type="hidden" id="category" name="category" value="adminForm">
+                                <input type="hidden" id="pageID" name="pageID" value="admin">
                                     <div class="form-group">
                                         <div class="col-sm-4 label-column">
-                                            <label class="control-label" for="name-input-field">Name </label>
+                                            <label  for="name-input-field">First Name </label>
                                         </div>
                                         <div class="col-sm-6 input-column">
-                                            <input class="form-control" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-4 label-column">
-                                            <label class="control-label" for="name-input-field">Staff ID</label>
-                                        </div>
-                                        <div class="col-sm-6 input-column">
-                                            <input class="form-control" type="text">
+                                            <input class="form-control" type="text" id="fName" name="fName">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-4 label-column">
-                                            <label class="control-label" for="email-input-field">Email </label>
+                                            <label  for="name-input-field">Last Name </label>
                                         </div>
                                         <div class="col-sm-6 input-column">
-                                            <input class="form-control" type="email">
+                                            <input class="form-control" type="text" id="lName" name="lName">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-4 label-column">
-                                            <label class="control-label" for="pawssword-input-field">Password </label>
+                                            <label  for="name-input-field">Phone Number </label>
                                         </div>
                                         <div class="col-sm-6 input-column">
-                                            <input class="form-control" type="password">
+                                            <input class="form-control" type="text" id="tel" name="tel">
+                                        </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 label-column">
+                                            <label  for="name-input-field">Staff ID</label>
+                                        </div>
+                                        <div class="col-sm-6 input-column">
+                                            <input class="form-control" value="<?php echo $rootID; ?>" type="number" id="SID" name="SID" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-4 label-column">
-                                            <label class="control-label" for="repeat-pawssword-input-field">Repeat Password </label>
+                                            <label  for="email-input-field">Email </label>
                                         </div>
                                         <div class="col-sm-6 input-column">
-                                            <input class="form-control" type="password">
+                                            <input class="form-control" type="email" id="mail" name="mail">
                                         </div>
                                     </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox">I've read and accept the terms and conditions</label>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 label-column">
+                                            <label  for="pawssword-input-field">Password </label>
+                                        </div>
+                                        <div class="col-sm-6 input-column">
+                                            <input class="form-control" type="password" id="pass" name="pass">
+                                        </div>
                                     </div>
-                                    <button class="btn btn-default submit-button" type="button">Submit Form</button>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 label-column">
+                                            <label  for="repeat-pawssword-input-field">Repeat Password </label>
+                                        </div>
+                                        <div class="col-sm-6 input-column">
+                                            <input class="form-control" type="password" id="rpass" name="rpass">
+                                        </div>
+                                    </div>
+                                    <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">Submit</button>
+                                        <div id="load" style="display: none" class="text-center">
+                                            <img src="assets/img/loading.gif" alt="load">
+                                        </div>
                                 </form>
                             </div>
                         </div>
@@ -174,19 +295,81 @@ $var = "dash";
 <script src="assets/js/jquery.min.js" type="text/javascript"></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
-<!-- Data tables -->
-<script src="assets/js/datatables.js"></script>
-
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
 <!-- sweet alerts -->
 <script src="assets/js/sweetalert.min.js"></script>
 
+<script type="text/javascript">
+$("button").click(function(){
+        $("#sub").hide();
+        $("#load").show();
+    });
 
-<script>
-$(document).ready(function() {
-        $('#ems').DataTable();
+    $(window).on('load', function(){
+        $("#sub").show();
+        $("#load").hide();
     });
 </script>
+
+<?php
+// Add alert script
+if (isset($suc) && $suc != "") {
+    echo " <script type='text/javascript'>
+        try {
+            swal('Successfully Created','Game has been created.', 'success');
+        } catch (err) {
+            alert('Game has been created.');
+        }
+    </script>";
+
+unset($suc);
+}
+
+else if (isset($err) && $err != "" ){
+echo "<script type='text/javascript'>
+    try {
+            swal('Error In creating the Game', '<?php echo $err; ?>', 'error');
+        } catch (err) {
+            alert('Error in creating the Game ' + '(<?php echo $err; ?>)');
+        }
+    </script>";
+
+}
+unset($err);
+
+
+// Update alert script
+
+if (isset($_SESSION['message']) && $_SESSION['message'] != "") {
+    if(isset($_SESSION['report']) && $_SESSION['report'] == "1"){
+        echo "<script type='text/javascript'>
+                try {
+                    swal('Successfully Added','Admin has been added successfully.', 'success');
+                } catch (err) {
+                    alert('Admin has been added successfully.');
+                }
+            </script>";
+    }
+unset($_SESSION['message']);
+unset($_SESSION['report']);
+}
+
+elseif (isset($_SESSION['message']) && $_SESSION['message'] != "") {
+    if(isset($_SESSION['report']) && $_SESSION['report'] == "0"){
+        echo "<script type='text/javascript'>
+                try {
+                    swal('Error','Error adding Admin.', 'error');
+                } catch (err) {
+                    alert('Error adding Admin.');
+                }
+            </script>";
+    }
+
+unset($_SESSION['message']);
+unset($_SESSION['report']);
+}
+?>
+
 </html>

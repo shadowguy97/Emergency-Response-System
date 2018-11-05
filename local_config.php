@@ -9,7 +9,7 @@
 DEFINE('DB_USER', 'root');
 DEFINE('DB_PASSWORD', '');
 DEFINE('DB_HOST', 'localhost');
-DEFINE('DB_NAME', 'lottoking');
+DEFINE('DB_NAME', 'ems_db');
 
 // Create connection
 $dbc = @mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME)
