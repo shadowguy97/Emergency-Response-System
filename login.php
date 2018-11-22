@@ -1,12 +1,7 @@
 <?php
-require_once 'local_config.php';
 session_start();
-
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if(isset($_POST['login'])){
-        require 'formsHandle.php';
-    }
-}
+include_once "resource/Database.php";
+include_once "resource/utilities.php";
 
 ?>
 
@@ -42,21 +37,33 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             </div>
         </nav>
     </div>
-    <div class="col-md-12">
-        <div class="login-card"><img src="assets/img/avatar_2x.png" class="profile-img-card">
-            <p class="profile-name-card"> </p>
-            <form  class="form-signin" action="log.php" method="post" id="loginForm" name="loginForm">
-                <span class="reauth-email"> </span>
-                <input class="form-control" type="email" required="" placeholder="Staff ID" autofocus="" id="inputEmail">
-                <input class="form-control" type="password" required="" placeholder="Password" id="inputPassword">
-                <div class="checkbox">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox">Remember me</label>
-                    </div>
-                </div>
-                <button class="btn btn-primary btn-block btn-lg btn-signin" type="submit">Sign in</button>
-            </form><a href="#" class="forgot-password">Forgot your password?</a></div>
+    <div class="container">
+    <h2>Login form</h2>
+        <div class="col-md-6 text-center">
+            <?php  if (isset($result) ) echo $result;      # these are for successfull AND unsuccessful  messages  ?>	
+            <?php if (!empty($form_errors) )  echo show_errors($form_errors); # these are for error messages  ?>
+        </div>
+        <div class="col-md-6">
+        <form action="" method="post" >
+            <div class="form-group">
+                <label for="usernameField1">Username:</label>
+                <input type="text" class="form-control" name="username"  id="usernameField1" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label for="password1">Password:</label>
+                <input type="password" class="form-control" name="password" id="password1" placeholder="Password">
+            </div>
+            <div class="checkbox">
+                <label>
+                <input type="checkbox" checked="true" value="yes" name="remember">Remember me. <!--the value 'yes' will be sent when it is set and the form is submitted , so in the $_POST['remember']-->
+                </label>
+            <input type="hidden" name="token" value="<?php echo _token(); ?>">
+                <button type="submit" class="btn btn-primary pull-right" name="login_sbt">Sign in</button>
+            </div>	
+            <br>
+            <a href="password_recovery.php">Forgot password ?</a>  <!-- previous recovery page  ->  forgot_password .php -->
+        </form>
+        </div>
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>

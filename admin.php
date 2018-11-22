@@ -1,27 +1,20 @@
-<?php
+<?php 
 /**
  * User: Pelumi
- * Date: 29/10/18
- * Time: 3:20 PM
+ * Date: 21/11/18
+ * Time: 12:30 PM
  */
 
- session_start(); 
- include_once "resource/Database.php";
+session_start();
+include_once "resource/Database.php";
 
-$var = "agents";
-/*
-$query = 'SELECT * FROM operators';
-$response = @mysqli_query($dbc, $query);
-$request = "SELECT * FROM operators WHERE id='$page'"
-$reply = @mysqli_query($dbc, $request);
-*/
+$var = "admin";
 ?>
 
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
@@ -34,10 +27,6 @@ $reply = @mysqli_query($dbc, $request);
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
-
-    <!-- Data Table -->
-    <link rel="stylesheet" href="assets/css/datatables.css">
-
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
 
@@ -47,10 +36,11 @@ $reply = @mysqli_query($dbc, $request);
     <link href="assets/fonts/pe-icon-7-stroke.css" rel="stylesheet" />
     <link href="assets/fonts/font-awesome.min.css" rel="stylesheet" />
 
+    <!-- sweet alerts -->
+    <script src="assets/js/sweetalert.min.js"></script>
+
 </head>
-
 <body>
-
 <div class="wrapper">
     <!-- sidebar start -->
     <?php include 'sidebar.php';?>
@@ -68,13 +58,13 @@ $reply = @mysqli_query($dbc, $request);
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="logs.php">Emergency logs</a>
+                    <a class="navbar-brand" href="admin.php">Administrator</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
                         <li>
                             <a href="#">
-                                <i class="fa fa-users"></i>
+                                <i class="fa fa-user"></i>
                             </a>
                         </li>
 
@@ -104,42 +94,28 @@ $reply = @mysqli_query($dbc, $request);
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="card">
-                            <div class="header">
-                                <h4 class="title">Emergency Service Providers</h4>
-                            </div>
-
                             <div class="content">
-                                <div class="table-responsive">
-                                        <table class="table table-hover" id="ems">
-                                            <thead>
-                                                <tr class="info">
-                                                    <th>#</th>
-                                                    <th>Id</th>
-                                                    <th>Name</th>
-                                                    <th>Classification</th>
-                                                    <th>Phone Number</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>fire01</td>
-                                                    <td>Ui Fire Service.</td>
-                                                    <td>Fire</td>
-                                                    <td>234-123-456-7890</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                <div class="thumbnail">
+                                    <img style="height: 300px; width: 300px;" src="assets/img/admin.jpeg" alt="admin"><br>
+                                    <p class="text-center" style="color: black"> <a href="reg_admin.php" class="btn btn-primary btn-block"> Add New Administrators </a></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="thumbnail">
+                                    <img style="height: 300px; width: 100%;" src="assets/img/opt.jpeg" alt="operators"><br>
+                                    <p class="text-center" style="color: black"> <a href="reg_operator.php" class="btn btn-primary btn-block"> Add New Emergency Operators </a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
-
     </div> <!-- main panel ends -->
 
 </div>
@@ -152,19 +128,81 @@ $reply = @mysqli_query($dbc, $request);
 <script src="assets/js/jquery.min.js" type="text/javascript"></script>
 <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
-<!-- Data tables -->
-<script src="assets/js/datatables.js"></script>
-
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
 <!-- sweet alerts -->
 <script src="assets/js/sweetalert.min.js"></script>
 
+<script type="text/javascript">
+$("button").click(function(){
+        $("#sub").hide();
+        $("#load").show();
+    });
 
-<script>
-$(document).ready(function() {
-        $('#ems').DataTable();
+    $(window).on('load', function(){
+        $("#sub").show();
+        $("#load").hide();
     });
 </script>
+
+<?php
+// Add alert script
+if (isset($suc) && $suc != "") {
+    echo " <script type='text/javascript'>
+        try {
+            swal('Successfully Created','Game has been created.', 'success');
+        } catch (err) {
+            alert('Game has been created.');
+        }
+    </script>";
+
+unset($suc);
+}
+
+else if (isset($err) && $err != "" ){
+echo "<script type='text/javascript'>
+    try {
+            swal('Error In creating the Game', '<?php echo $err; ?>', 'error');
+        } catch (err) {
+            alert('Error in creating the Game ' + '(<?php echo $err; ?>)');
+        }
+    </script>";
+
+}
+unset($err);
+
+
+// Update alert script
+
+if (isset($_SESSION['message']) && $_SESSION['message'] != "") {
+    if(isset($_SESSION['report']) && $_SESSION['report'] == "1"){
+        echo "<script type='text/javascript'>
+                try {
+                    swal('Successfully Added','Admin has been added successfully.', 'success');
+                } catch (err) {
+                    alert('Admin has been added successfully.');
+                }
+            </script>";
+    }
+unset($_SESSION['message']);
+unset($_SESSION['report']);
+}
+
+elseif (isset($_SESSION['message']) && $_SESSION['message'] != "") {
+    if(isset($_SESSION['report']) && $_SESSION['report'] == "0"){
+        echo "<script type='text/javascript'>
+                try {
+                    swal('Error','Error adding Admin.', 'error');
+                } catch (err) {
+                    alert('Error adding Admin.');
+                }
+            </script>";
+    }
+
+unset($_SESSION['message']);
+unset($_SESSION['report']);
+}
+?>
+
 </html>

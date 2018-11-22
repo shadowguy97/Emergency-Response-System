@@ -6,7 +6,7 @@
  */
 
 session_start();
-require_once 'local_config.php';
+include_once "resource/Database.php";
 
 $var = "dash";
 
@@ -115,6 +115,7 @@ $var = "dash";
                                                     <th>Date</th>
                                                     <th>Time</th>
                                                     <th>Responded</th>
+                                                    <th>View on Map</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -125,6 +126,7 @@ $var = "dash";
                                                     <td>12/11/1995</td>
                                                     <td>5:04 PM</td>
                                                     <td></td>
+                                                    <td><a href="" class="btn btn-primary"> <span class="fa fa-map"></span> </a></td>
                                                 </tr>
                                             </tbody>
                                         </table>

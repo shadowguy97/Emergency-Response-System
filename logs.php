@@ -6,7 +6,7 @@
  */
 
  session_start(); 
-require_once 'local_config.php';
+ include_once "resource/Database.php";
 
 $var = "logs";
 /*
@@ -74,7 +74,7 @@ $reply = @mysqli_query($dbc, $request);
                     <ul class="nav navbar-nav navbar-left">
                         <li>
                             <a href="#">
-                                <i class="fa fa-dashboard"></i>
+                                <i class="fa fa-sticky-note"></i>
                             </a>
                         </li>
 
