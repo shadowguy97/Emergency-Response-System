@@ -1,8 +1,10 @@
 <?php
 session_start();
 include_once "resource/Database.php";
-include_once "resource/utilities.php";
-
+//include_once "resource/utilities.php";
+include_once "resource/login_set.php";
+if (isset($_SESSION['msg']) ) echo $_SESSION['msg']; //this is for popup messages 
+unset($_SESSION['msg']);
 ?>
 
 <!DOCTYPE html>
@@ -39,12 +41,8 @@ include_once "resource/utilities.php";
     </div>
     <div class="container">
     <h2>Login form</h2>
-        <div class="col-md-6 text-center">
-            <?php  if (isset($result) ) echo $result;      # these are for successfull AND unsuccessful  messages  ?>	
-            <?php if (!empty($form_errors) )  echo show_errors($form_errors); # these are for error messages  ?>
-        </div>
         <div class="col-md-6">
-        <form action="" method="post" >
+        <form action="resource/login_set.php" method="post" >
             <div class="form-group">
                 <label for="usernameField1">Username:</label>
                 <input type="text" class="form-control" name="username"  id="usernameField1" placeholder="Username">

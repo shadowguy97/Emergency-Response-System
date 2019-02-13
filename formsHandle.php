@@ -85,7 +85,7 @@ switch ($pageId) {
                         $mail->Body = $mail_body;
 
                         $_SESSION['msg'] = "Admin Added Successfully<br>Please check your email for conformation link!";
-                        $_SESSION['report']='1';
+                        $_SESSION['report']='0';
                         header('location: reg_admin.php');
 
                         // error handiling for PHPmailer
@@ -95,17 +95,17 @@ switch ($pageId) {
                             header('location: reg_admin.php');
                         }else{
                             $_SESSION['message'] = "Error: ".$mail->ErrorInfo;
-                            $_SESSION['report']='0';
+                            $_SESSION['report']='1';
                             header('location: reg_admin.php');
                         }	
                     }else{
-                        $_SESSION['msg'] = "There was an error processing your request. Please Try again.";
+                        $_SESSION['message'] = "There was an error processing your request. Please Try again.";
                         $_SESSION['report']='0';
                         header('location: reg_admin.php');
                     }
 
-                }catch(PDOException $ex){ // thsi will be the error from the conection and not from the user
-                    $_SESSION['msg'] = "An error occured: WHILE INSERTING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
+                }catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                    $_SESSION['message'] = "An error occured: WHILE INSERTING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
                     $_SESSION['report']='0';
                     header('location: reg_admin.php');
                     }

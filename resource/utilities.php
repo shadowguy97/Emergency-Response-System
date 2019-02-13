@@ -261,7 +261,7 @@ function confirmLogout(){
 		  				} else {
 		    				swal({
 				  				title: 'Hurray!!',
-				  				text: 'Your are currently loged in :)',
+				  				text: 'Your are currently logged in :)',
 				  				type: 'success',
 				  				timer: 6000
 				  			})

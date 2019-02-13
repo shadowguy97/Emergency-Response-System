@@ -9,9 +9,7 @@ session_start();
 include_once "resource/Database.php";
 include_once "resource/utilities.php";
 
-echo ($_SESSION['message']);
-echo ($_SESSION['msg']);
-echo ($_SESSION['report']);
+print_r($_SESSION);
 
 $var = "admin";
 $rootID = 0;
@@ -212,6 +210,21 @@ else{
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                <?php
+                if (isset($_SESSION['message']) && $_SESSION['report'] == "1"){
+                    echo("
+                    <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: #32CD32; color: black;\">
+                         ".$_SESSION['message']."
+                    </div>");
+                }
+
+                else{
+                    echo("
+                    <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: red; color: black;\">
+                         ".$_SESSION['message']."
+                    </div>");
+                }
+                    ?>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
@@ -304,9 +317,6 @@ else{
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
-<!-- sweet alerts -->
-<script src="assets/js/sweetalert.min.js"></script>
-
 <script type="text/javascript">
 $("button").click(function(){
         $("#sub").hide();
@@ -319,37 +329,38 @@ $("button").click(function(){
     });
 </script>
 
+<!-- sweet alerts -->
+<!-- Alert script-->
+<script src="assets/js/sweetalert.min.js"></script>
+    <script type='text/javascript'>
+        var message = <?php echo $_SESSION['message'] ?>
+        var report = <?php echo $_SESSION['report'] ?>
+
+        if((typeof message) != "undefined"){
+            if((typeof report) != "undefined" && report == "1"){
+                try {
+                   swal('Error',message, 'error');
+                }
+                catch (err) {
+                    alert(message);
+                }
+            }
+        }
+
+
+        if((typeof message) != "undefined"){
+            if((typeof report) != "undefined" && report == "0"){
+                try {
+                    swal('Successfully Added', message , 'success');
+                } catch (err) {
+                    alert(message);
+                }
+            }
+        }
+    </script>
+
 <?php
-// Alert script
-
-if (isset($_SESSION['message']) && $_SESSION['message'] != "") {
-    if(isset($_SESSION['report']) && $_SESSION['report'] == "1"){
-        echo "<script type='text/javascript'>
-                try {
-                    swal('Successfully Added',".$_SESSION['message'].", 'success');
-                } catch (err) {
-                    alert(".$_SESSION['message'].");
-                }
-            </script>";
-    }
 unset($_SESSION['message']);
 unset($_SESSION['report']);
-}
-
-elseif (isset($_SESSION['message']) && $_SESSION['message'] != "") {
-    if(isset($_SESSION['report']) && $_SESSION['report'] == "0"){
-        echo "<script type='text/javascript'>
-                try {
-                    swal('Error',".$_SESSION['message'].", 'error');
-                } catch (err) {
-                    alert(".$_SESSION['message'].");
-                }
-            </script>";
-    }
-
-unset($_SESSION['message']);
-unset($_SESSION['report']);
-}
 ?>
-
 </html>

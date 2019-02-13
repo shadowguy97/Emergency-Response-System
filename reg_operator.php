@@ -10,8 +10,10 @@ include_once "resource/Database.php";
 
 $var = "admin";
 
+print_r($_SESSION);
+
 $spID = 0;
-$query = 'SELECT COUNT(*) FROM admin;';
+$query = 'SELECT COUNT(*) FROM service_provider;';
 $statement = $db->prepare($query);
 $statement->execute();
 $data = $statement->fetchAll();
@@ -164,6 +166,21 @@ else{
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                <?php
+                if (isset($_SESSION['message']) && $_SESSION['report'] == "1"){
+                    echo("
+                    <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: #32CD32; color: black;\">
+                         ".$_SESSION['message']."
+                    </div>");
+                }
+
+                else{
+                    echo("
+                    <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: red; color: black;\">
+                         ".$_SESSION['message']."
+                    </div>");
+                }
+                    ?>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
@@ -174,7 +191,7 @@ else{
                                 <form method="post" action="formsHandle.php" name="spForm" id="spForm" onsubmit="return(checkForm());">
                                 <input type="hidden" id="category" name="category" value="spForm">
                                 <input type="hidden" id="pageID" name="pageID" value="admin">
-                                <input type="hidden" id="adminID" name="adminID" value="">
+                                <input type="hidden" id="adminID" name="adminID" value="100001">
                                     <div class="form-group">
                                         <div class="col-sm-4 label-column">
                                             <label  for="name-input-field">Service Provider Name </label>
@@ -252,38 +269,38 @@ $("button").click(function(){
         $("#load").hide();
     });
 </script>
+<!-- Alert script-->
+<script src="assets/js/sweetalert.min.js"></script>
+    <script type='text/javascript'>
+        var message = <?php echo $_SESSION['message'] ?>
+        var report = <?php echo $_SESSION['report'] ?>
+
+        if((typeof message) != "undefined"){
+            if((typeof report) != "undefined" && report == "1"){
+                try {
+                   swal('Error',message, 'error');
+                }
+                catch (err) {
+                    alert(message);
+                }
+            }
+        }
+
+
+        if((typeof message) != "undefined"){
+            if((typeof report) != "undefined" && report == "0"){
+                try {
+                    swal('Successfully Added', message , 'success');
+                } catch (err) {
+                    alert(message);
+                }
+            }
+        }
+    </script>
 
 <?php
-// Alert script
-
-if (isset($_SESSION['message']) && $_SESSION['message'] != "") {
-    if(isset($_SESSION['report']) && $_SESSION['report'] == "1"){
-        echo "<script type='text/javascript'>
-                try {
-                    swal('Successfully Added',".$_SESSION['message'].", 'success');
-                } catch (err) {
-                    alert(".$_SESSION['message'].");
-                }
-            </script>";
-    }
 unset($_SESSION['message']);
 unset($_SESSION['report']);
-}
-
-elseif (isset($_SESSION['message']) && $_SESSION['message'] != "") {
-    if(isset($_SESSION['report']) && $_SESSION['report'] == "0"){
-        echo "<script type='text/javascript'>
-                try {
-                    swal('Error',".$_SESSION['message'].", 'error');
-                } catch (err) {
-                    alert(".$_SESSION['message'].");
-                }
-            </script>";
-    }
-
-unset($_SESSION['message']);
-unset($_SESSION['report']);
-}
 ?>
 
 </html>
