@@ -228,12 +228,12 @@ function sub(n){
                                 <form method="post" action="formsHandle.php" id="del_form" name="del_form">
                                     <input type="hidden" id="pageID" name="pageID" value="admin">
                                     <input type="hidden" id="category" name="category" value="DEL">
+                                    <input type="hidden" id='admin_id' name='admin_id' value=''>
                                 </form>
                                 
                                 <form method="post" action="formsHandle.php" id="data_form" name="data_form">
                                     <input type="hidden" id="pageID" name="pageID" value="admin">
                                     <input type="hidden" id="category" name="category" value="UPD">
-                                    <input type="hidden" id="adminID" name="adminID" value="100001">
                                     <input type="hidden" id='admin_id' name='admin_id' value=''>
                                     <input type="hidden" id='admin_fname' name='admin_fname' value=''>
                                     <input type="hidden" id='admin_lname' name='admin_lname' value=''>

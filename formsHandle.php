@@ -157,65 +157,61 @@ switch ($pageId) {
             $data = $sql_query->fetchAll();
             $len = $data[0]['COUNT(*)'];
 
-            for ($i = 0; $i < $len; $i++){
-               if(isset($_POST['sub'.$i])) {
-                   $fname = $_POST['admin_fname'.$i];
-                   $lname = $_POST['admin_lname'.$i];
-                   $phone = $_POST['admin_phone'.$i];
-                   $email = $_POST['admin_email'.$i];
-                   $adminID = $_POST['admin_id'];
+            $fname = $_POST['admin_fname'];
+            $lname = $_POST['admin_lname'];
+            $phone = $_POST['admin_phone'];
+            $email = $_POST['admin_email'];
+            $adminID = $_POST['admin_id'];
                         
-                   try{
-                       $sqlUpdate = "UPDATE admin SET admin_id=:admin_id, admin_fname=:fname, admin_lname=:lname, admin_phone=:phone, admin_email=:email WHERE admin_id=:admin_id";
-                       $statement = $db->prepare($sqlUpdate);
-                       $statement->execute( 
-                           array(
-                                'admin_id' => $adminID,    
-                                'fname' => $fname,
-                               'lname' => $lname, 
-                               'phone' => $phone,
-                               'email' => $email
-                           )
-                       );
+            try{
+                $sqlUpdate = "UPDATE admin SET admin_id=:admin_id, admin_fname=:fname, admin_lname=:lname, admin_phone=:phone, admin_email=:email WHERE admin_id=:admin_id";
+                $statement = $db->prepare($sqlUpdate);
+                $statement->execute( 
+                    array(
+                        'admin_id' => $adminID,    
+                        'fname' => $fname,
+                        'lname' => $lname, 
+                        'phone' => $phone,
+                        'email' => $email
+                    )
+                );
            
-                       $_SESSION['message'] = "Administrators Details Updated Successfully";
-                       $_SESSION['report']='1';
-                       header('location: admin.php');
+                $_SESSION['message'] = "Administrators Details Updated Successfully";
+                $_SESSION['report']='1';
+                header('location: admin.php');
            
-                   }
-                   catch(PDOException $ex){ // this will be the error from the conection and not from the user
-                       $_SESSION['message'] = "An error occured: WHILE UPDATING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
-                       $_SESSION['report']='0';
-                       header('location: admin.php');
-                   }        
+            }
+            catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                $_SESSION['message'] = "An error occured: WHILE UPDATING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
+                $_SESSION['report']='0';
+                header('location: admin.php');
+            }        
                    
-               }
-           }
-        }
+       }
+    
         
         //This delete the entry from database for the admins based on the changes made by the admin.
-       if(isset($_POST['category']) && $_POST["category"] == "DEL"){            
-        $admin_id = $_POST['admin_id'];
-        try{
-            $query = 'DELETE FROM admin WHERE admin_id = :admin_id';
-            $sql_query = $db->prepare($query);
-            $sql_query->execute(
-                array(
-                    ':admin_id' => $admin_id
-                )
-            );
+        if(isset($_POST['category']) && $_POST["category"] == "DEL"){           
+            $admin_id = $_POST['admin_id'];
+            try{
+                $query = 'DELETE FROM admin WHERE admin_id = :admin_id';
+                $sql_query = $db->prepare($query);
+                $sql_query->execute(
+                    array(
+                        ':admin_id' => $admin_id
+                    )
+                );
 
-            $_SESSION['message'] = "Administrator Deleted Successfully";
-            $_SESSION['report']='1';
-            header('location: admin.php');
+                $_SESSION['message'] = "Administrator Deleted Successfully";
+                $_SESSION['report']='1';
+                header('location: admin.php');
+            }
+            catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                $_SESSION['message'] = "An error occured: WHILE DELETING THE FORM DATA FROM THE DATABASE==>".$ex->getMessage();
+                $_SESSION['report']='0';
+                header('location: admin.php');
+            }
         }
-        catch(PDOException $ex){ // this will be the error from the conection and not from the user
-            $_SESSION['message'] = "An error occured: WHILE DELETING THE FORM DATA FROM THE DATABASE==>".$ex->getMessage();
-            $_SESSION['report']='0';
-            header('location: admin.php');
-        }
-    }
-    
     break;
 
     case "agents":
