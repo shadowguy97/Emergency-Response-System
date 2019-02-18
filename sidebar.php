@@ -19,7 +19,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="<?php if($var == 'agent'){ echo "active";} ?>">
+                <li class="<?php if($var == 'agents'){ echo "active";} ?>">
                     <a href="services.php">
                         <i class="fa fa-users"></i>
                         <p>Emergency Provider</p>

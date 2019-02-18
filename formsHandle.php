@@ -38,6 +38,7 @@ switch ($pageId) {
     break;
 
     case "admin":
+        //this adds a new admin to the database.
         if (isset($_POST['category']) && $_POST['category'] == "adminForm"){
             if (isset($_POST['sub'])) {
                 $fName = $_POST['fName'];
@@ -112,6 +113,7 @@ switch ($pageId) {
                 }
         }
         
+        //this adds a new service provider.
         if (isset($_POST['category']) && $_POST['category'] == "spForm"){
             if (isset($_POST['sub'])) {
                 $name = $_POST['Name'];
@@ -123,30 +125,161 @@ switch ($pageId) {
                 try{
                     $sqlInsert = "INSERT INTO service_provider (sp_id, sp_name, sp_phone, admin_id, sp_class)
                                     VALUES  (:sp_id, :name, :phone, :sid, :class)";
-
                     $statement = $db->prepare($sqlInsert);
-                    $statement->execute( array(
+                    $statement->execute(
+                        array(
                         ':sid' => $adminID,
                         ':name' => $name, 
                         ':class' => $class,
                         ':sp_id' => $sp_ID, 
-                        ':phone' => $phone));
+                        ':phone' => $phone)
+                    );
 
-                        $_SESSION['message'] = "Service Provider Added Successfully";
-                        $_SESSION['report']='1';
-                        header('location: reg_operator.php');
+                    $_SESSION['message'] = "Service Provider Added Successfully";
+                    $_SESSION['report']='1';
+                    header('location: reg_operator.php');
 
-                }catch(PDOException $ex){ // thsi will be the error from the conection and not from the user
+                }
+                catch(PDOException $ex){ // this will be the error from the conection and not from the user
                     $_SESSION['message'] = "An error occured: WHILE INSERTING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
                     $_SESSION['report']='0';
                     header('location: reg_operator.php');
-                    }
                 }
             }
+        }
+
+        //This updates the database for the admins based on the changes made by the admin.
+        if(isset($_POST['category']) && $_POST["category"] == "UPD"){
+            
+            $query = 'SELECT COUNT(*) FROM admin;';
+            $sql_query = $db->prepare($query);
+            $sql_query->execute();
+            $data = $sql_query->fetchAll();
+            $len = $data[0]['COUNT(*)'];
+
+            for ($i = 0; $i < $len; $i++){
+               if(isset($_POST['sub'.$i])) {
+                   $fname = $_POST['admin_fname'.$i];
+                   $lname = $_POST['admin_lname'.$i];
+                   $phone = $_POST['admin_phone'.$i];
+                   $email = $_POST['admin_email'.$i];
+                   $adminID = $_POST['admin_id'];
+                        
+                   try{
+                       $sqlUpdate = "UPDATE admin SET admin_id=:admin_id, admin_fname=:fname, admin_lname=:lname, admin_phone=:phone, admin_email=:email WHERE admin_id=:admin_id";
+                       $statement = $db->prepare($sqlUpdate);
+                       $statement->execute( 
+                           array(
+                                'admin_id' => $adminID,    
+                                'fname' => $fname,
+                               'lname' => $lname, 
+                               'phone' => $phone,
+                               'email' => $email
+                           )
+                       );
+           
+                       $_SESSION['message'] = "Administrators Details Updated Successfully";
+                       $_SESSION['report']='1';
+                       header('location: admin.php');
+           
+                   }
+                   catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                       $_SESSION['message'] = "An error occured: WHILE UPDATING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
+                       $_SESSION['report']='0';
+                       header('location: admin.php');
+                   }        
+                   
+               }
+           }
+        }
         
+        //This delete the entry from database for the admins based on the changes made by the admin.
+       if(isset($_POST['category']) && $_POST["category"] == "DEL"){            
+        $admin_id = $_POST['admin_id'];
+        try{
+            $query = 'DELETE FROM admin WHERE admin_id = :admin_id';
+            $sql_query = $db->prepare($query);
+            $sql_query->execute(
+                array(
+                    ':admin_id' => $admin_id
+                )
+            );
 
+            $_SESSION['message'] = "Administrator Deleted Successfully";
+            $_SESSION['report']='1';
+            header('location: admin.php');
+        }
+        catch(PDOException $ex){ // this will be the error from the conection and not from the user
+            $_SESSION['message'] = "An error occured: WHILE DELETING THE FORM DATA FROM THE DATABASE==>".$ex->getMessage();
+            $_SESSION['report']='0';
+            header('location: admin.php');
+        }
+    }
+    
+    break;
 
+    case "agents":
+        $query = 'SELECT COUNT(*) FROM service_provider;';
+        $sql_query = $db->prepare($query);
+        $sql_query->execute();
+        $data = $sql_query->fetchAll();
+        $len = $data[0]['COUNT(*)'];
 
-        mysqli_close($dbc);
-        break;
+        //This case updates the database for the services based on the changes made by the admin.
+         if($_POST["category"] == 'UPD'){    
+            $name = $_POST['sp_name'];
+            $class = $_POST['sp_class'];
+            $phone = $_POST['sp_phone'];
+            $sp_ID = $_POST['sp_id'];
+            $adminID = $_POST['adminID'];
+                         
+            try{
+                $sqlUPdate = "UPDATE service_provider SET sp_id=:sp_id, sp_name=:name, sp_phone=:phone, admin_id=:sid, sp_class=:class WHERE sp_id=:sp_id";
+                $statement = $db->prepare($sqlUPdate);
+                $statement->execute( 
+                    array(
+                        'sp_id' => $sp_ID, 
+                        'name' => $name,
+                        'phone' => $phone,
+                        'sid' => $adminID,
+                        'class' => $class
+                    )
+                );
+            
+                $_SESSION['message'] = "Service Provider Details Updated Successfully";
+                $_SESSION['report']='1';
+                header('location: services.php');
+            
+            }
+            catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                $_SESSION['message'] = "An error occured: WHILE UPDATING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
+                $_SESSION['report']='0';
+                header('location: services.php');
+            }        
+        }
+
+        //This delete the entry from database for the admins based on the changes made by the admin.
+       if(isset($_POST['category']) && $_POST["category"] == "DEL"){            
+            $sp_id = $_POST['sp_id'];
+            try{
+                $query = 'DELETE FROM service_provider WHERE sp_id = :sp_id';
+                $sql_query = $db->prepare($query);
+                $sql_query->execute(
+                    array(
+                        ':sp_id' => $sp_id
+                    )
+                );
+
+                $_SESSION['message'] = "Service Provider Deleted Successfully";
+                $_SESSION['report']='1';
+                header('location: services.php');
+            }
+            catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                $_SESSION['message'] = "An error occured: WHILE DELETING THE FORM DATA FROM THE DATABASE==>".$ex->getMessage();
+                $_SESSION['report']='0';
+                header('location: services.php');
+            }
+        }
+
+    break;
 }

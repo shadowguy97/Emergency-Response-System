@@ -10,20 +10,39 @@ include_once "resource/Database.php";
 
 $var = "admin";
 
-print_r($_SESSION);
+$msg = $_SESSION['message'];
+$rep = $_SESSION['report'];
 
-$spID = 0;
 $query = 'SELECT COUNT(*) FROM service_provider;';
 $statement = $db->prepare($query);
 $statement->execute();
+
 $data = $statement->fetchAll();
 $Var_Id = $data[0]['COUNT(*)'];
+
+
 if($Var_Id == 0) {
     $spID = 100001;
 }
-else{
+if($Var_Id != 0){ 
+    
     $Var_Id = $Var_Id + 100001;
-    $spID = $Var_Id;
+    $tempID = $Var_Id;
+    
+    $query2 = 'SELECT sp_id FROM service_provider WHERE sp_id = :tempID;';
+    $statement2 = $db->prepare($query2);
+    $statement2->execute(array(
+        ':tempID' => $tempID));
+    $data2 = $statement2->fetchAll();
+    $var2 = $data2[0]['sp_id'];
+
+    if($var2 != $tempID) {
+        $spID = $tempID;
+    }
+    if($var2 == $tempID){
+        $tempID = $tempID + 1;
+        $spID = $tempID;
+    }
 }
 
 ?>
@@ -167,17 +186,17 @@ else{
             <div class="container-fluid">
                 <div class="row">
                 <?php
-                if (isset($_SESSION['message']) && $_SESSION['report'] == "1"){
+                if (isset($msg) && $rep == "1"){
                     echo("
                     <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: #32CD32; color: black;\">
-                         ".$_SESSION['message']."
+                         ".$msg."
                     </div>");
                 }
 
-                else{
+                if (isset($msg) && $rep == "0"){
                     echo("
                     <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: red; color: black;\">
-                         ".$_SESSION['message']."
+                         ".$msg."
                     </div>");
                 }
                     ?>
@@ -269,38 +288,41 @@ $("button").click(function(){
         $("#load").hide();
     });
 </script>
-<!-- Alert script-->
+
+<!-- sweet alerts -->
 <script src="assets/js/sweetalert.min.js"></script>
-    <script type='text/javascript'>
-        var message = <?php echo $_SESSION['message'] ?>
-        var report = <?php echo $_SESSION['report'] ?>
-
-        if((typeof message) != "undefined"){
-            if((typeof report) != "undefined" && report == "1"){
-                try {
-                   swal('Error',message, 'error');
-                }
-                catch (err) {
-                    alert(message);
-                }
-            }
-        }
-
-
-        if((typeof message) != "undefined"){
-            if((typeof report) != "undefined" && report == "0"){
-                try {
-                    swal('Successfully Added', message , 'success');
-                } catch (err) {
-                    alert(message);
-                }
-            }
-        }
-    </script>
 
 <?php
-unset($_SESSION['message']);
-unset($_SESSION['report']);
-?>
+// Success alert script
+if (isset($rep) && $rep == "1") {
+echo " <script type='text/javascript'>
+    try {
+            swal('Successfully','".$msg."', 'success');
+        } catch () {
+            alert('".$msg."');
+        }
+    </script>";
 
+unset($rep);
+unset($msg);
+}
+// Error alert script
+else if (isset($rep) && $rep == "0") {
+echo "<script type='text/javascript'>
+    try {
+            swal('Error', '".$msg."', 'error');
+        } catch () {
+            alert(alert('".$msg."'););
+        }
+    </script>";
+
+    unset($rep);
+    unset($msg);    
+}
+
+unset($rep);
+unset($_SESSION['report']);
+unset($msg);
+unset($_SESSION['message']);
+?>
 </html>
