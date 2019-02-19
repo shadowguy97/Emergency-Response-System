@@ -1,10 +1,11 @@
 <?php
-session_start();
-include_once "resource/Database.php";
-//include_once "resource/utilities.php";
 include_once "resource/login_set.php";
-if (isset($_SESSION['msg']) ) echo $_SESSION['msg']; //this is for popup messages 
-unset($_SESSION['msg']);
+
+$msg = $_SESSION['message'];
+$rep = $_SESSION['report'];
+
+print_r($_SESSION);
+
 ?>
 
 <!DOCTYPE html>
@@ -40,31 +41,50 @@ unset($_SESSION['msg']);
         </nav>
     </div>
     <div class="container">
-    <h2>Login form</h2>
+        <h2>Login form</h2>
         <div class="col-md-6">
-        <form action="resource/login_set.php" method="post" >
-            <div class="form-group">
-                <label for="usernameField1">Username:</label>
-                <input type="text" class="form-control" name="username"  id="usernameField1" placeholder="Username">
-            </div>
-            <div class="form-group">
-                <label for="password1">Password:</label>
-                <input type="password" class="form-control" name="password" id="password1" placeholder="Password">
-            </div>
-            <div class="checkbox">
-                <label>
-                <input type="checkbox" checked="true" value="yes" name="remember">Remember me. <!--the value 'yes' will be sent when it is set and the form is submitted , so in the $_POST['remember']-->
-                </label>
-            <input type="hidden" name="token" value="<?php echo _token(); ?>">
-                <button type="submit" class="btn btn-primary pull-right" name="login_sbt">Sign in</button>
-            </div>	
-            <br>
+            <form action="resource/login_set.php" method="post" >
+                <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" name="username"  id="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                        <input type="checkbox" checked="true" value="yes" name="remember">Remember me. <!--the value 'yes' will be sent when it is set and the form is submitted , so in the $_POST['remember']-->
+                        </label>
+                        <input type="hidden" name="token" value="<?php echo _token(); ?>">
+                        <button type="submit" class="btn btn-primary pull-right" name="login_sbt" id="login_sbt">Sign in</button>
+                    </div>	
+                    <br>
+            </form>
             <a href="password_recovery.php">Forgot password ?</a>  <!-- previous recovery page  ->  forgot_password .php -->
-        </form>
+        </div>
+    
+        <div class="col-md-6">
+            <?php
+                if (isset($msg) && $rep == "0"){
+                    echo("
+                        <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: red; color: black; height: 50%; font-size: 50px; font-style: italic;\">
+                        ".$msg."
+                        </div>"
+                    );
+                }
+            ?>
         </div>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-</body>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
 
+<?php
+unset($rep);
+unset($_SESSION['report']);
+unset($msg);
+unset($_SESSION['message']);
+?>
+
+</body>
 </html>

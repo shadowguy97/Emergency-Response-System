@@ -1,43 +1,51 @@
 <?php
+session_start();
 include_once "Database.php";
 
 if (isset($_POST['username']) && $_POST['password']){
     if (isset($_POST['login_sbt'])) {
-            $username = $_POST['username'];
-            $pass = md5($_POST['password']);
+        $username = $_POST['username'];
+        $pass = md5($_POST['password']);
+            
+        try{
+            # CHECK IF THE ID RETREVIED EXISTS IN THE DATABASE OR NOT
+            $sqlQuery = "SELECT * FROM admin WHERE admin_id = :id";
+            $stmt = $db->prepare($sqlQuery);
+            $stmt->execute( array(
+                ':id' => $username
+            ));
                 
-            try{
-                # CHECK IF THE ID RETREVIED EXISTS IN THE DATABASE OR NOT
-                $sqlQuery = "SELECT * FROM ems_db.admin WHERE id = :id";
-                $statement=$db->prepare($sqlQuery);
-                $statement->execute( array(
-                    ':id' => $username
-                ));
-                
-                if ($row = $statement->fetch()) {# i.e user exists
-                    $password = $row['password'];
+            $row = $stmt->fetch();
+
+            if ($row['admin_id'] == $username) {# i.e user exists
+                $password = $row['password'];
                     
-                    if($pass == $password){
-                        //user exist and can proceed futher.
-                        $_SESSION['Fname'] = $row['admin_fname'];
-                    }
-
-                    $isValid = true;
+                if($pass == $password){
+                    //user exist and can proceed futher.
+                    $_SESSION['fullname'] = $row['admin_fname'];
                     header('location: ../dashboard.php');
-
                 }
                 else{# no such user exists
-                        # so cookie id is invalid and -->DESTROY THE SESSION AND LOGOUT THE USER
-                    echo popupMessage('Oops..',"this Username does not exists in our database",'error','login.php');
-                    $isValid = false;
+                    # so cookie id is invalid and -->DESTROY THE SESSION AND LOGOUT THE USER
+                    $_SESSION['message'] = "Oops.. this Username or Password does not exists in our database";
+                    $_SESSION['report'] = '0';
                     header('location: ../login.php');
                 }
             }
-            catch(PDOException $ex){
-                echo popupMessage('Oops..', "something went wrong ,WHILE CHECKING THE USER'S ID IN THE DATABASE,".$ex->getMessage(),'error','login.php');
+
+            else{# no such user exists
+                # so cookie id is invalid and -->DESTROY THE SESSION AND LOGOUT THE USER
+                $_SESSION['message'] = "Oops.. this Username or Password does not exists in our database";
+                $_SESSION['report'] = '0';
                 header('location: ../login.php');
-            }# end try-catch  
+            }
         }
+        catch(PDOException $ex){
+                $_SESSION['message'] = "Oops..something went wrong while checking the userID in our database, " .$ex->getMessage();
+                $_SESSION['report']='0';
+                header('location: ../login.php');
+        }# end try-catch 
+    }
 }
 
 
@@ -56,25 +64,6 @@ function validate_token($requestToken){
 		return true;
 	}
 	return false; # by default it will return false if we found thta the session variable is not set...
-
-}
-
-function popupMessage($title, $text, $type, $page){ # scripts included above
-    $message ="<script type='text/javascript'>
-                swal({
-                    title: '{$title}',
-                    text: '{$text}',
-                    timer: 6000,
-                    type: '{$type}',
-                    showConfirmButton: false
-                });
-                setTimeout(function(){
-                    window.location.href='{$page}'; 
-                    }, 5000);
-                </script>";
-    
-    $_SESSION['msg'] = $message;
-    return $message;
 
 }
 
