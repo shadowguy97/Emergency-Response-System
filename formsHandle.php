@@ -86,28 +86,28 @@ switch ($pageId) {
                         $mail->Body = $mail_body;
 
                         $_SESSION['msg'] = "Admin Added Successfully<br>Please check your email for conformation link!";
-                        $_SESSION['report']='0';
+                        $_SESSION['report'] = '0';
                         header('location: reg_admin.php');
 
                         // error handiling for PHPmailer
                         if ($mail->Send()) {
                             $_SESSION['message'] = "Admin Added Successfully<br>Please check your email for conformation link!";
-                            $_SESSION['report']='1';
+                            $_SESSION['report'] = '1';
                             header('location: reg_admin.php');
                         }else{
                             $_SESSION['message'] = "Error: ".$mail->ErrorInfo;
-                            $_SESSION['report']='1';
+                            $_SESSION['report'] = '1';
                             header('location: reg_admin.php');
                         }	
                     }else{
                         $_SESSION['message'] = "There was an error processing your request. Please Try again.";
-                        $_SESSION['report']='0';
+                        $_SESSION['report']  = '0';
                         header('location: reg_admin.php');
                     }
 
                 }catch(PDOException $ex){ // this will be the error from the conection and not from the user
                     $_SESSION['message'] = "An error occured: WHILE INSERTING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
-                    $_SESSION['report']='0';
+                    $_SESSION['report'] = '0';
                     header('location: reg_admin.php');
                     }
                 }
@@ -136,13 +136,13 @@ switch ($pageId) {
                     );
 
                     $_SESSION['message'] = "Service Provider Added Successfully";
-                    $_SESSION['report']='1';
+                    $_SESSION['report'] = '1';
                     header('location: reg_operator.php');
 
                 }
                 catch(PDOException $ex){ // this will be the error from the conection and not from the user
                     $_SESSION['message'] = "An error occured: WHILE INSERTING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
-                    $_SESSION['report']='0';
+                    $_SESSION['report'] = '0';
                     header('location: reg_operator.php');
                 }
             }
@@ -177,13 +177,13 @@ switch ($pageId) {
                 );
            
                 $_SESSION['message'] = "Administrators Details Updated Successfully";
-                $_SESSION['report']='1';
+                $_SESSION['report'] = '1';
                 header('location: admin.php');
            
             }
             catch(PDOException $ex){ // this will be the error from the conection and not from the user
                 $_SESSION['message'] = "An error occured: WHILE UPDATING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
-                $_SESSION['report']='0';
+                $_SESSION['report'] = '0';
                 header('location: admin.php');
             }        
                    
@@ -203,12 +203,12 @@ switch ($pageId) {
                 );
 
                 $_SESSION['message'] = "Administrator Deleted Successfully";
-                $_SESSION['report']='1';
+                $_SESSION['report'] = '1';
                 header('location: admin.php');
             }
             catch(PDOException $ex){ // this will be the error from the conection and not from the user
                 $_SESSION['message'] = "An error occured: WHILE DELETING THE FORM DATA FROM THE DATABASE==>".$ex->getMessage();
-                $_SESSION['report']='0';
+                $_SESSION['report'] = '0';
                 header('location: admin.php');
             }
         }
@@ -243,13 +243,13 @@ switch ($pageId) {
                 );
             
                 $_SESSION['message'] = "Service Provider Details Updated Successfully";
-                $_SESSION['report']='1';
+                $_SESSION['report'] = '1';
                 header('location: services.php');
             
             }
             catch(PDOException $ex){ // this will be the error from the conection and not from the user
                 $_SESSION['message'] = "An error occured: WHILE UPDATING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
-                $_SESSION['report']='0';
+                $_SESSION['report'] = '0';
                 header('location: services.php');
             }        
         }
@@ -267,12 +267,12 @@ switch ($pageId) {
                 );
 
                 $_SESSION['message'] = "Service Provider Deleted Successfully";
-                $_SESSION['report']='1';
+                $_SESSION['report'] = '1';
                 header('location: services.php');
             }
             catch(PDOException $ex){ // this will be the error from the conection and not from the user
                 $_SESSION['message'] = "An error occured: WHILE DELETING THE FORM DATA FROM THE DATABASE==>".$ex->getMessage();
-                $_SESSION['report']='0';
+                $_SESSION['report'] = '0';
                 header('location: services.php');
             }
         }
