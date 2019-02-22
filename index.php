@@ -24,7 +24,7 @@
   <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 
-<body>
+<body style="background:url('assets/img/pic6.jpg')">
 <div class="row">
     <div class="col-md-12">
         <nav class="navbar navbar-default custom-header">
@@ -43,11 +43,50 @@
         </nav>
     </div>
     <div class="col-md-12">
-        <div class="jumbotron hero-technology">
-            <h1 class="hero-title">Emergency Response System.</h1>
-            <p class="hero-subtitle">This site is made so as to help manage reported emergency situations and various Emergency Service Provider. <br>
-                Please click the button below to Login</p>
-            <p><a class="btn btn-primary btn-lg hero-button" role="button" href="login.php">Login</a></p>
+        <div class="text-center">
+            <h1 class="hero-title">Distress Call</h1>
+            <p class="hero-subtitle">Please click the button that fits your situations.</p>
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <!-- Insert script to get longitude and latitude -->
+                <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
+                    <input type="hidden" id="category" name="category" value="fireForm">
+                    <input type="hidden" id="pageID" name="pageID" value="distress">
+                    <input type="hidden" id="longitude" name="longitude" value="">
+                    <input type="hidden" id="latitude" name="latitude" value="">
+                    <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">
+                        <img src="assets/img/pic5.jpg" class="img-responsive" alt="fire_dept">
+                        FIRE
+                    </button>
+                </form>
+            </div>
+            <br><br>
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <!-- Insert script to get longitude and latitude -->
+                <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
+                    <input type="hidden" id="category" name="category" value="fireForm">
+                    <input type="hidden" id="pageID" name="pageID" value="distress">
+                    <input type="hidden" id="longitude" name="longitude" value="">
+                    <input type="hidden" id="latitude" name="latitude" value="">
+                    <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">
+                        <img src="assets/img/pic1.jpg" class="img-responsive" alt="health_dept">
+                        HEALTH
+                    </button>
+                </form>
+            </div>
+            <br><br>
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <!-- Insert script to get longitude and latitude -->
+                <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
+                    <input type="hidden" id="category" name="category" value="fireForm">
+                    <input type="hidden" id="pageID" name="pageID" value="distress">
+                    <input type="hidden" id="longitude" name="longitude" value="">
+                    <input type="hidden" id="latitude" name="latitude" value="">
+                    <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">
+                        <img src="assets/img/opt.jpeg" class="img-responsive" alt="security_dept">
+                         SECURITY
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
