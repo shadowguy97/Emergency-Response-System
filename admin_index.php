@@ -25,10 +25,12 @@
 </head>
 
 <body>
+<div class="row">
     <div class="col-md-12">
         <nav class="navbar navbar-default custom-header">
             <div class="container-fluid">
                 <div class="navbar-header">
+                    <a class="navbar-brand navbar-link" href="#">Emergency Response System</a>
                     <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -40,16 +42,15 @@
             </div>
         </nav>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron hero-technology">
-                <h1 class="hero-title">Emergency Response System.</h1>
-                <p class="hero-subtitle">This site is made so as to help manage reported emergency situations and various Emergency Service Provider. <br>
+    <div class="col-md-12">
+        <div class="jumbotron hero-technology">
+            <h1 class="hero-title">Emergency Response System.</h1>
+            <p class="hero-subtitle">This site is made so as to help manage reported emergency situations and various Emergency Service Provider. <br>
                 Please click the button below to Login</p>
-                <p><a class="btn btn-primary btn-lg hero-button" role="button" href="login.php">Login</a></p>
-            </div>
+            <p><a class="btn btn-primary btn-lg hero-button" role="button" href="login.php">Login</a></p>
         </div>
     </div>
+</div>
 
 
 </body>
