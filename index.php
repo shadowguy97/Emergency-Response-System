@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,73 +29,167 @@
   <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 
-<body style="background:url('assets/img/pic6.jpg')">
+<body style="background:url('assets/img/pic6.jpg'); background-repeat: no-repeat; background-size: cover;">
+<!-- Insert script to get longitude and latitude -->
+<script>
+
+</script>
 <div class="row">
-    <div class="col-md-12">
-        <nav class="navbar navbar-default custom-header">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand navbar-link" href="#">Emergency Response System</a>
-                    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right links">
-                        <li role="presentation"><a href="index.php">Home </a></li>
-                        <li role="presentation"><a href="login.php">Login </a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
     <div class="col-md-12">
         <div class="text-center">
             <h1 class="hero-title">Distress Call</h1>
             <p class="hero-subtitle">Please click the button that fits your situations.</p>
             <div class="col-md-4 col-sm-4 col-lg-4">
-                <!-- Insert script to get longitude and latitude -->
-                <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
-                    <input type="hidden" id="category" name="category" value="fireForm">
-                    <input type="hidden" id="pageID" name="pageID" value="distress">
-                    <input type="hidden" id="longitude" name="longitude" value="">
-                    <input type="hidden" id="latitude" name="latitude" value="">
-                    <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">
-                        <img src="assets/img/pic5.jpg" class="img-responsive" alt="fire_dept">
-                        FIRE
-                    </button>
-                </form>
+                <!-- Button to open modal function and let form be submitted from modal -->
+                <a class="btn btn-danger action-button" role="button" data-toggle="modal" data-target="#fire_help">
+                <img src="assets/img/pic5.jpg" class="img-responsive" alt="fire_dept">
+                    FIRE
+                </a>
             </div>
             <br><br>
             <div class="col-md-4 col-sm-4 col-lg-4">
-                <!-- Insert script to get longitude and latitude -->
-                <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
-                    <input type="hidden" id="category" name="category" value="fireForm">
-                    <input type="hidden" id="pageID" name="pageID" value="distress">
-                    <input type="hidden" id="longitude" name="longitude" value="">
-                    <input type="hidden" id="latitude" name="latitude" value="">
-                    <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">
-                        <img src="assets/img/pic1.jpg" class="img-responsive" alt="health_dept">
-                        HEALTH
-                    </button>
-                </form>
+                <!-- Button to open modal function and let form be submitted from modal -->
+                <a class="btn btn-danger action-button" role="button" data-toggle="modal" data-target="#health_help">
+                <img src="assets/img/pic1.jpg" class="img-responsive" alt="health_dept">
+                    HEALTH
+                </a>
             </div>
             <br><br>
             <div class="col-md-4 col-sm-4 col-lg-4">
-                <!-- Insert script to get longitude and latitude -->
-                <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
-                    <input type="hidden" id="category" name="category" value="fireForm">
-                    <input type="hidden" id="pageID" name="pageID" value="distress">
-                    <input type="hidden" id="longitude" name="longitude" value="">
-                    <input type="hidden" id="latitude" name="latitude" value="">
-                    <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">
-                        <img src="assets/img/opt.jpeg" class="img-responsive" alt="security_dept">
-                         SECURITY
-                    </button>
-                </form>
+                <!-- Button to open modal function and let form be submitted from modal -->
+                <a class="btn btn-danger action-button" role="button" data-toggle="modal" data-target="#sec_help">
+                    <img src="assets/img/opt.jpeg" class="img-responsive" alt="security_dept"> <!-- change the image to a security pic -->
+                    SECURITY
+                </a>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modals for submitting signals -->
+
+<!-- Modals for Fire signals -->
+<div class="modal fade" id="fire_help" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="myModalLabel">Please Input Your Phone Number.</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
+                                <input type="hidden" id="category" name="category" value="fireForm">
+                                <input type="hidden" id="pageID" name="pageID" value="distress">
+                                <input type="hidden" id="type" name="type" value="Fire">
+                                <div class="form-group">
+                                    <label for="phone">Longitude :</label>
+                                    <input type="text" class="form-control" id="lng" name="lng" placeholder="Longitude" readonly="readonly" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Latitude :</label>
+                                    <input type="text" class="form-control" id="lat" name="lat" placeholder="Latitude" readonly="readonly" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number :</label>
+                                    <input type="text" class="form-control" id="tel" name="tel" placeholder="Phone Number" required>
+                                </div>
+                                <div class="form-group">
+                                    <button id="get_loc" name="get_loc" class="btn btn-primary btn-block">Get My Location</button>
+                                    <button type="submit" id="sub" name="sub" class="btn btn-primary btn-block">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals for Health signals -->
+<div class="modal fade" id="health_help" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="myModalLabel">Please Input Your Phone Number.</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
+                                <input type="hidden" id="category" name="category" value="healthForm">
+                                <input type="hidden" id="pageID" name="pageID" value="distress">
+                                <input type="hidden" id="type" name="type" value="Health">
+                                <div class="form-group">
+                                    <label for="phone">Longitude :</label>
+                                    <input type="text" class="form-control" id="lng" name="lng" placeholder="Longitude" readonly="readonly" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Latitude :</label>
+                                    <input type="text" class="form-control" id="lat" name="lat" placeholder="Latitude" readonly="readonly" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number :</label>
+                                    <input type="text" class="form-control" id="tel" name="tel" placeholder="Phone Number" required>
+                                </div>
+                                <div class="form-group">
+                                    <button id="get_loc" name="get_loc" class="btn btn-primary btn-block">Get My Location</button>
+                                    <button type="submit" id="sub" name="sub" class="btn btn-primary btn-block">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals for Security signals -->
+<div class="modal fade" id="sec_help" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="myModalLabel">Please Input Your Phone Number.</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form method="post" action="formsHandle.php" name="distressForm" id="distressForm">
+                                <input type="hidden" id="category" name="category" value="securityForm">
+                                <input type="hidden" id="pageID" name="pageID" value="distress">
+                                <input type="hidden" id="type" name="type" value="Security">
+                                <div class="form-group">
+                                    <label for="phone">Longitude :</label>
+                                    <input type="text" class="form-control" id="lng" name="lng" placeholder="Longitude" readonly="readonly" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Latitude :</label>
+                                    <input type="text" class="form-control" id="lat" name="lat" placeholder="Latitude" readonly="readonly" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number :</label>
+                                    <input type="text" class="form-control" id="tel" name="tel" placeholder="Phone Number" required>
+                                </div>
+                                <div class="form-group">
+                                    <button id="get_loc" name="get_loc" class="btn btn-primary btn-block">Get My Location</button>
+                                    <button type="submit" id="sub" name="sub" class="btn btn-primary btn-block">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 

@@ -280,6 +280,178 @@ switch ($pageId) {
     break;
 
     case "distress":
+        if(isset($_POST['category']) && $_POST["category"] == "healthForm"){
+            if (isset($_POST['sub'])) {
+                $dcall_lat = $_POST['lat'];
+                $dcall_lng = md5($_POST['lng']);
+                $dcall_type = $_POST['type'];
+                $phone = $_POST['tel'];
+                $time = date("Y-m-d\TG:i:s");
+                $status = "Unattended";
 
+                try{
+                    $query = 'SELECT COUNT(*) FROM distress_call;';
+                    $sql_query = $db->prepare($query);
+                    $sql_query->execute();
+                    $data = $sql_query->fetchAll();
+                    $len = $data[0]['COUNT(*)'];
+
+                    if(isset($len) & $len == 0){
+                        $dcall_id = 1;
+                    }
+                    else{
+                        $dcall_id = 1 + $len;
+                    }
+
+
+
+                }catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                    $_SESSION['message'] = "An error occured while proceessing your request".$ex->getMessage(); //remove $ex->getMessage()
+                    $_SESSION['report'] = '0';
+                    header('location: index.php');
+                }
+
+                try{
+                    $sqlInsert = "INSERT INTO distress_call (dcall_id, dcall_lat, dcall_long, dcall_type, dcall_phone, dcall_time, dcall_status)
+                                    VALUES  (:dcall_id, :dcall_lat :dcall_lng, :dcall_type, :dcall_phone, :dcall_time, :dcall_status)";
+
+                    $statement = $db->prepare($sqlInsert);
+                    $statement->execute( array(
+                        ':dcall_id' => $dcall_id,
+                        ':dcall_lat' => $dcall_lat, 
+                        ':dcall_lng' => $dcall_lng,
+                        ':dcall_type' => $dcall_type,
+                        ':dcall_phone' => $phone,
+                        ':dcall_time' => $time,
+                        ':dcall_status' => $status
+                    ));
+
+                    $_SESSION['message'] = "Help is on it's way";
+                    $_SESSION['report'] = '1';
+                    header('location: index.php');
+
+                }catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                    $_SESSION['message'] = "An error occured while proceessing your request".$ex->getMessage(); //remove $ex->getMessage()
+                    $_SESSION['report'] = '0';
+                    header('location: index.php');
+                }
+            }
+        }   
+
+        if(isset($_POST['category']) && $_POST["category"] == "fireForm"){
+            if (isset($_POST['sub'])) {
+                $dcall_lat = $_POST['lat'];
+                $dcall_lng = md5($_POST['lng']);
+                $dcall_type = $_POST['type'];
+                $phone = $_POST['tel'];
+                $time = date("Y-m-d\TG:i:s");
+                $status = "Unattended";
+
+                try{
+                    $query = 'SELECT COUNT(*) FROM distress_call;';
+                    $sql_query = $db->prepare($query);
+                    $sql_query->execute();
+                    $data = $sql_query->fetchAll();
+                    $len = $data[0]['COUNT(*)'];
+
+                    if(isset($len) & $len == 0){
+                        $dcall_id = 1;
+                    }
+                    else{
+                        $dcall_id = 1 + $len;
+                    }
+
+
+
+                }catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                    $_SESSION['message'] = "An error occured while proceessing your request".$ex->getMessage(); //remove $ex->getMessage()
+                    $_SESSION['report'] = '0';
+                    header('location: index.php');
+                }
+
+                try{
+                    $sqlInsert = "INSERT INTO distress_call (dcall_id, dcall_lat, dcall_long, dcall_type, dcall_phone, dcall_time, dcall_status)
+                                    VALUES  (:dcall_id, :dcall_lat :dcall_lng, :dcall_type, :dcall_phone, :dcall_time, :dcall_status)";
+
+                    $statement = $db->prepare($sqlInsert);
+                    $statement->execute( array(
+                        ':dcall_id' => $dcall_id,
+                        ':dcall_lat' => $dcall_lat, 
+                        ':dcall_lng' => $dcall_lng,
+                        ':dcall_type' => $dcall_type,
+                        ':dcall_phone' => $phone,
+                        ':dcall_time' => $time,
+                        ':dcall_status' => $status
+                    ));
+
+                    $_SESSION['message'] = "Help is on it's way";
+                    $_SESSION['report'] = '1';
+                    header('location: index.php');
+
+                }catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                    $_SESSION['message'] = "An error occured while proceessing your request".$ex->getMessage(); //remove $ex->getMessage()
+                    $_SESSION['report'] = '0';
+                    header('location: index.php');
+                }
+            }
+        }   
+
+        if(isset($_POST['category']) && $_POST["category"] == "securityForm"){
+            if (isset($_POST['sub'])) {
+                $dcall_lat = $_POST['lat'];
+                $dcall_lng = md5($_POST['lng']);
+                $dcall_type = $_POST['type'];
+                $phone = $_POST['tel'];
+                $time = date("Y-m-d\TG:i:s");
+                $status = "Unattended";
+
+                try{
+                    $query = 'SELECT COUNT(*) FROM distress_call;';
+                    $sql_query = $db->prepare($query);
+                    $sql_query->execute();
+                    $data = $sql_query->fetchAll();
+                    $len = $data[0]['COUNT(*)'];
+
+                    if(isset($len) & $len == 0){
+                        $dcall_id = 1;
+                    }
+                    else{
+                        $dcall_id = 1 + $len;
+                    }
+
+
+
+                }catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                    $_SESSION['message'] = "An error occured while proceessing your request".$ex->getMessage(); //remove $ex->getMessage()
+                    $_SESSION['report'] = '0';
+                    header('location: index.php');
+                }
+
+                try{
+                    $sqlInsert = "INSERT INTO distress_call (dcall_id, dcall_lat, dcall_long, dcall_type, dcall_phone, dcall_time, dcall_status)
+                                    VALUES  (:dcall_id, :dcall_lat :dcall_lng, :dcall_type, :dcall_phone, :dcall_time, :dcall_status)";
+
+                    $statement = $db->prepare($sqlInsert);
+                    $statement->execute( array(
+                        ':dcall_id' => $dcall_id,
+                        ':dcall_lat' => $dcall_lat, 
+                        ':dcall_lng' => $dcall_lng,
+                        ':dcall_type' => $dcall_type,
+                        ':dcall_phone' => $phone,
+                        ':dcall_time' => $time,
+                        ':dcall_status' => $status
+                    ));
+
+                    $_SESSION['message'] = "Help is on it's way";
+                    $_SESSION['report'] = '1';
+                    header('location: index.php');
+
+                }catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                    $_SESSION['message'] = "An error occured while proceessing your request".$ex->getMessage(); //remove $ex->getMessage()
+                    $_SESSION['report'] = '0';
+                    header('location: index.php');
+                }
+            }
+        }   
     break;
 }
