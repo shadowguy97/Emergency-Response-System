@@ -15,8 +15,6 @@ if(!isset($_SESSION['fullname'])){
 include_once "resource/Database.php";
 include_once "resource/utilities.php";
 
-print_r($_SESSION);
-
 $var = "admin";
 
 $msg = $_SESSION['message'];
