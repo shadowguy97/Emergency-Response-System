@@ -286,7 +286,7 @@ switch ($pageId) {
                 $dcall_lng = $_POST['lng'];
                 $dcall_type = $_POST['type'];
                 $phone = $_POST['tel'];
-                $time = date("Y-m-d\TG:i:s");
+                $time = date("Y-m-d\ || G:i:s");
                 $status = "Unattended";
 
                 try{
@@ -341,7 +341,7 @@ switch ($pageId) {
                 $dcall_lng = $_POST['lng'];
                 $dcall_type = $_POST['type'];
                 $phone = $_POST['tel'];
-                $time = date("Y-m-d\TG:i:s");
+                $time = date("Y-m-d\ || G:i:s");
                 $status = "Unattended";
 
                 try{
@@ -396,7 +396,7 @@ switch ($pageId) {
                 $dcall_lng = $_POST['lng'];
                 $dcall_type = $_POST['type'];
                 $phone = $_POST['tel'];
-                $time = date("Y-m-d\TG:i:s");
+                $time = date("Y-m-d\ || G:i:s");
                 $status = "Unattended";
 
                 try{
@@ -444,6 +444,47 @@ switch ($pageId) {
                 }
             }
         }   
+
+    break;
+
+    case "dash":
+        
+        $query = 'SELECT COUNT(*) FROM distress_call;';
+        $sql_query = $db->prepare($query);
+        $sql_query->execute();
+        $data = $sql_query->fetchAll();
+        $len = $data[0]['COUNT(*)'];
+    
+        //This case updates the database for the services based on the changes made by the admin.
+        if($_POST["category"] == 'UPD'){ 
+            for($i = 1; $i <= $len; $i++){
+                if(isset($_POST["sub".$i])){ 
+                    $status = $_POST['dcall_status'.$i];
+                    $id = $_POST['dcall_id'.$i];
+
+                    try{
+                        $sqlUPdate = "UPDATE distress_call SET dcall_status=:stat WHERE dcall_id=:dcall_id";
+                        $statement = $db->prepare($sqlUPdate);
+                        $statement->execute( 
+                            array(
+                                ':dcall_id' => $id, 
+                                ':stat' => $status
+                            )
+                        );
+                    
+                        $_SESSION['message'] = "Details Updated Successfully";
+                        $_SESSION['report'] = '1';
+                        header('location: dashboard.php');
+                    
+                    }
+                    catch(PDOException $ex){ // this will be the error from the conection and not from the user
+                        $_SESSION['message'] = "An error occured: WHILE UPDATING THE FORM DATA INTO THE DATABASE==>".$ex->getMessage();
+                        $_SESSION['report'] = '0';
+                        header('location: dashboard.php');
+                    }        
+                }
+            }
+        }
 
     break;
 }

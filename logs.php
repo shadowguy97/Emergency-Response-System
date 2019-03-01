@@ -9,12 +9,12 @@
  include_once "resource/Database.php";
 
 $var = "logs";
-/*
-$query = 'SELECT * FROM operators';
-$response = @mysqli_query($dbc, $query);
-$request = "SELECT * FROM operators WHERE id='$page'"
-$reply = @mysqli_query($dbc, $request);
-*/
+
+$sql = "SELECT * FROM distress_call ORDER BY dcall_id ASC";
+$statement = $db->prepare($sql);
+$statement->execute();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -113,25 +113,34 @@ $reply = @mysqli_query($dbc, $request);
                             <div class="content">
                                 <div class="table-responsive">
                                         <table class="table table-hover" id="ems">
-                                            <thead>
-                                                <tr class="info">
-                                                    <th>#</th>
-                                                    <th>Emergency type</th>
-                                                    <th>Location</th>
-                                                    <th>Date</th>
-                                                    <th>Time</th>
-                                                    <th>Responded</th>
-                                                </tr>
-                                            </thead>
+                                        <thead>
+                                            <tr class="info">
+                                                <th>#</th>
+                                                <th>Emergency type</th>
+                                                <th>Longitude</th>
+                                                <th>Latitude</th>
+                                                <th>Date & Time</th>
+                                                <th>Phone Number</th>
+                                                <th>Responded</th>
+                                            </tr>
+                                        </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Fire</td>
-                                                    <td>Kuti</td>
-                                                    <td>12/11/1995</td>
-                                                    <td>5:04 PM</td>
-                                                    <td></td>
-                                                </tr>
+                                            <?php
+                                            $var = 1;
+                                            while ($stmt = $statement->fetch(PDO::FETCH_ASSOC)){
+                                                echo ("
+                                                    <tr id='row".$var."' name='row".$var."'>
+                                                    <td> ".$var." </td>
+                                                    <td> ".$stmt['dcall_type']. " </td>
+                                                    <td> ".$stmt['dcall_long']. " </td>
+                                                    <td> ".$stmt['dcall_lat']. " </td>
+                                                    <td> ".$stmt['dcall_time']. " </td>
+                                                    <td> ".$stmt['dcall_phone']. " </td>
+                                                    <td> ".$stmt['dcall_status']. " </td>
+                                                    </tr>"
+                                                );
+                                            }
+                                            ?>
                                             </tbody>
                                         </table>
                                 </div>

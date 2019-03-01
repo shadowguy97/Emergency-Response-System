@@ -16,6 +16,19 @@ include_once "resource/Database.php";
 
 $var = "dash";
 
+$sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' ORDER BY dcall_id ASC";
+$statement = $db->prepare($sql);
+$statement->execute();
+
+$query = 'SELECT COUNT(*) FROM distress_call;';
+$sql_query = $db->prepare($query);
+$sql_query->execute();
+$data = $sql_query->fetchAll();
+$len = $data[0]['COUNT(*)'];
+
+$msg = $_SESSION['message'];
+$rep = $_SESSION['report'];
+
 ?>
 
 <!doctype html>
@@ -50,6 +63,41 @@ $var = "dash";
 
 </head>
 <body>
+
+<script>
+function edit(n){
+    var len = <?php echo $len; ?>
+
+    for (var i = 0; i <= len; i++){
+        if (n == i){
+            $('#dcall_status'+i).prop('readonly', false);
+            $("#sub"+i).prop('disabled',false);
+            $("#sub"+i).removeClass('btn-disabled');
+            $("#sub"+i).addClass('btn-success');
+            $("#can"+i).prop('disabled',false);
+            $("#can"+i).removeClass('btn-disabled');
+            $("#can"+i).addClass('btn-danger');
+        }
+    }
+}
+
+function cancel(n){
+    var len = <?php echo $len; ?>
+
+    for (var i = 0; i <= len; i++){
+        if (n == i){
+            $('#dcall_status'+i).prop('readonly', true);
+            $("#sub"+i).prop('disabled',true);
+            $("#sub"+i).addClass('btn-disabled');
+            $("#sub"+i).removeClass('btn-success');
+            $("#can"+i).prop('disabled',true);
+            $("#can"+i).addClass('btn-disabled');
+            $("#can"+i).removeClass('btn-danger');
+        }
+    }
+}
+
+</script>
 
 <div class="wrapper">
     <!-- sidebar start -->
@@ -108,34 +156,76 @@ $var = "dash";
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">Distress Calls</h4>
+                                <?php
+                                if (isset($msg) && $rep == "1"){
+                                    echo("
+                                        <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: #32CD32; color: black;\">
+                                        ".$msg."
+                                        </div>"
+                                    );
+                                }
+
+                                if (isset($msg) && $rep == "0"){
+                                    echo("
+                                        <div class=\"col-md-12 text-center container-fluid\" style= \"background-color: red; color: black;\">
+                                        ".$msg."
+                                        </div>"
+                                    );
+                                }
+                            ?>
                             </div>
 
                             <div class="content">
                                 <div class="table-responsive">
-                                        <table class="table table-hover" id="ems">
-                                            <thead>
-                                                <tr class="info">
-                                                    <th>#</th>
-                                                    <th>Emergency type</th>
-                                                    <th>Location</th>
-                                                    <th>Date</th>
-                                                    <th>Time</th>
-                                                    <th>Responded</th>
-                                                    <th>View on Map</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Fire</td>
-                                                    <td>Kuti</td>
-                                                    <td>12/11/1995</td>
-                                                    <td>5:04 PM</td>
-                                                    <td></td>
-                                                    <td><a href="" class="btn btn-primary"> <span class="fa fa-map"></span> </a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <table class="table table-hover" id="ems">
+                                        <thead>
+                                            <tr class="info">
+                                                <th>#</th>
+                                                <th>Emergency type</th>
+                                                <th>Longitude</th>
+                                                <th>Latitude</th>
+                                                <th>Date & Time</th>
+                                                <th>Phone Number</th>
+                                                <th>Responded</th>
+                                                <th>View on Map</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        
+                                            <form method="post" action='formsHandle.php' id="data_form" name="data_form">
+                                                <input type="hidden" id="pageID" name="pageID" value="dash">
+                                                <input type="hidden" id="category" name="category" value="UPD">
+                                                
+                                                <?php
+                                                    $var = 1;
+                                                    while ($stmt = $statement->fetch(PDO::FETCH_ASSOC)){
+                                                    echo ("
+                                                    <tr id='row".$var."' name='row".$var."'>
+                                                    <td> ".$var." </td>
+                                                    <td> ".$stmt['dcall_type']. " </td>
+                                                    <td> ".$stmt['dcall_long']. " </td>
+                                                    <td> ".$stmt['dcall_lat']. " </td>
+                                                    <td> ".$stmt['dcall_time']. " </td>
+                                                    <td> ".$stmt['dcall_phone']. " </td>
+                                                    <td>
+                                                        <input class='form-control' id='dcall_status".$var."' name='dcall_status".$var."' value='".$stmt['dcall_status']. "' readonly='readonly'>
+                                                        <input type='hidden' id='dcall_id".$var."' name='dcall_id".$var."' value='".$stmt['dcall_id']. "'>
+                                                    </td>
+                                                    <td><a href='' class='btn btn-success'> <span class='fa fa-map'></span> </a></td>
+                                                    <td> <button type='button' class='btn btn-group btn-group-sm btn-primary' onclick='edit(".$var.")'><i class='fa fa-pencil'></i></button>
+                                                        <button class='btn btn-group btn-group-sm btn-disabled' type='submit' id='sub".$var."' name='sub".$var."' disabled='disabled'><i class='fa fa-save'></i></button>
+                                                        <button class='btn btn-group btn-group-sm btn-disabled' type='button' id='can".$var."' name='can".$var."' disabled='disabled' onclick='cancel(".$var.")'><i class='fa fa-close'></i></button> 
+                                                    </td>
+
+                                                    </tr>
+                                                    ");
+                                                    $var++; 
+                                                    } 
+                                                ?>
+                                            </form>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -162,13 +252,49 @@ $var = "dash";
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
-<!-- sweet alerts -->
-<script src="assets/js/sweetalert.min.js"></script>
-
-
 <script>
 $(document).ready(function() {
         $('#ems').DataTable();
     });
 </script>
+
+
+
+<!-- sweet alerts -->
+<script src="assets/js/sweetalert.min.js"></script>
+
+<?php
+// Success alert script
+if (isset($rep) && $rep == "1") {
+echo " <script type='text/javascript'>
+    try {
+            swal('Successfully','".$msg."', 'success');
+        } catch () {
+            alert('".$msg."');
+        }
+    </script>";
+
+unset($rep);
+unset($msg);
+}
+// Error alert script
+else if (isset($rep) && $rep == "0") {
+echo "<script type='text/javascript'>
+    try {
+            swal('Error', '".$msg."', 'error');
+        } catch () {
+            alert(alert('".$msg."'););
+        }
+    </script>";
+
+    unset($rep);
+    unset($msg);    
+}
+
+unset($rep);
+unset($_SESSION['report']);
+unset($msg);
+unset($_SESSION['message']);
+
+?>
 </html>

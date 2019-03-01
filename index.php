@@ -4,7 +4,6 @@ session_start();
 $msg = $_SESSION['message'];
 $rep = $_SESSION['report'];
 
-print_r($_SESSION);
 ?>
 
 <!doctype html>
