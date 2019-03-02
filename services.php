@@ -160,7 +160,7 @@ function sub(n){
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="logs.php">Emergency logs</a>
+                    <a class="navbar-brand" href="services.php">Emergency Service Providers</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">

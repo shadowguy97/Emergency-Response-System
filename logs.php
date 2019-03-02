@@ -139,6 +139,7 @@ $statement->execute();
                                                     <td> ".$stmt['dcall_status']. " </td>
                                                     </tr>"
                                                 );
+                                                $var++;
                                             }
                                             ?>
                                             </tbody>

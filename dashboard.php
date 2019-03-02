@@ -5,7 +5,8 @@
  * Time: 3:20 PM
  */
 
-session_start();
+//insert function that reloads the page frequently. or find script that reloads the database as it is updated
+ session_start();
 /*
 if(!isset($_SESSION['fullname'])){
     $_SESSION['message'] = "Please Login to access this page.";
@@ -19,6 +20,9 @@ $var = "dash";
 $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' ORDER BY dcall_id ASC";
 $statement = $db->prepare($sql);
 $statement->execute();
+$statement2 = $db->prepare($sql);
+$statement2->execute();
+
 
 $query = 'SELECT COUNT(*) FROM distress_call;';
 $sql_query = $db->prepare($query);
@@ -212,7 +216,7 @@ function cancel(n){
                                                         <input class='form-control' id='dcall_status".$var."' name='dcall_status".$var."' value='".$stmt['dcall_status']. "' readonly='readonly'>
                                                         <input type='hidden' id='dcall_id".$var."' name='dcall_id".$var."' value='".$stmt['dcall_id']. "'>
                                                     </td>
-                                                    <td><a href='' class='btn btn-success'> <span class='fa fa-map'></span> </a></td>
+                                                    <td><a role='button' data-toggle='modal' data-target='#map_modal".$var."' class='btn btn-success'> <span class='fa fa-map'></span> </a></td>
                                                     <td> <button type='button' class='btn btn-group btn-group-sm btn-primary' onclick='edit(".$var.")'><i class='fa fa-pencil'></i></button>
                                                         <button class='btn btn-group btn-group-sm btn-disabled' type='submit' id='sub".$var."' name='sub".$var."' disabled='disabled'><i class='fa fa-save'></i></button>
                                                         <button class='btn btn-group btn-group-sm btn-disabled' type='button' id='can".$var."' name='can".$var."' disabled='disabled' onclick='cancel(".$var.")'><i class='fa fa-close'></i></button> 
@@ -238,6 +242,73 @@ function cancel(n){
 
 </div>
 
+<!-- Modal for Maps -->
+<style>
+#map {
+    width: 500px;
+    height: 500px;
+}
+</style>
+
+<?php
+    $var_i = 1;
+    while ($stmt_new = $statement2->fetch(PDO::FETCH_ASSOC)){
+        echo ("
+        <script>
+
+        x = navigator.geolocation;
+        x.getCurrentPosition(success, failure);
+
+        function success(position){
+            //fetch position coordinates from database
+            var mylat = ".$stmt_new['dcall_lat']. ";
+            var mylng = ".$stmt_new['dcall_long']. ";
+
+            //Api ready latitude and longitude string
+            var coords = new google.maps.LatLng(mylat, mylng);
+
+            //seting up maps
+            var mapOptions = {
+                zoom: 10,
+                center: coords,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+
+            //creates the map
+            var map = new.google.maps.Map(document.getElementById('map'), mapOptions);
+
+            //creates a marker
+            var marker = new google.mpas.Marker({map: map, position: coords});
+        }
+
+        function failure(){
+            $('#map".$var_i."').append('Error Loading map')
+        }
+        </script>
+        
+        <div class='modal fade' id='map_modal".$var_i."' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                        <h4 class='modal-title text-center' id='myModalLabel'>Distress Location</h4>
+                    </div>
+                    <div class='modal-body'>
+                        <div class='container-fluid'>
+                            <div class='row'>
+                                <div class='col-md-12'>
+                                    <div id='map".$var_i."'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        ");
+        $var_i++;
+    }
+?>
 
 
 </body>
@@ -251,6 +322,7 @@ function cancel(n){
 
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
 <script>
 $(document).ready(function() {
