@@ -70,7 +70,7 @@ $rep = $_SESSION['report'];
             <?php
                 if (isset($msg) && $rep == "0"){
                     echo("
-                        <div class=\"text-center container-fluid\" style= \"background-color: red; color: black; height: 30%; font-size: 30px; font-style: italic;\">
+                        <div class=\"text-center container-fluid\" style= \"background-color: red; color: white; height: 30%; font-size: 30px; font-style: italic;\">
                         ".$msg."
                         </div>"
                     );

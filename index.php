@@ -42,26 +42,26 @@ $rep = $_SESSION['report'];
         <div class="text-center">
             <h1 class="hero-title">Distress Call</h1>
             <p class="hero-subtitle">Please click the button that fits your situations.</p>
-            <div class="col-md-4 col-sm-4 col-lg-4">
+            <div class="col-sm-4">
                 <!-- Button to open modal function and let form be submitted from modal -->
                 <a class="btn btn-danger action-button" role="button" data-toggle="modal" data-target="#fire_help">
-                <img src="assets/img/pic5.jpg" class="img-responsive" alt="fire_dept">
+                <img src="assets/img/pic5.jpg" class="img-responsive" alt="fire_dept" width="250" height="100">
                     FIRE
                 </a>
             </div>
-            <br><br>
-            <div class="col-md-4 col-sm-4 col-lg-4">
+
+            <div class="col-sm-4">
                 <!-- Button to open modal function and let form be submitted from modal -->
                 <a class="btn btn-danger action-button" role="button" data-toggle="modal" data-target="#health_help">
-                <img src="assets/img/pic1.jpg" class="img-responsive" alt="health_dept">
+                <img src="assets/img/pic1.jpg" class="img-responsive" alt="health_dept" width="250" height="100">
                     HEALTH
                 </a>
             </div>
-            <br><br>
+
             <div class="col-md-4 col-sm-4 col-lg-4">
                 <!-- Button to open modal function and let form be submitted from modal -->
                 <a class="btn btn-danger action-button" role="button" data-toggle="modal" data-target="#sec_help">
-                    <img src="assets/img/opt.jpeg" class="img-responsive" alt="security_dept"> <!-- change the image to a security pic -->
+                    <img src="assets/img/opt.jpeg" class="img-responsive" alt="security_dept" width="250" height="100">
                     SECURITY
                 </a>
             </div>

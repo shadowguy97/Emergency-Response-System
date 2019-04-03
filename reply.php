@@ -1,3 +1,15 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Pelumi
+ * Date: 2/27/19
+ * Time: 4:25 PM
+ */
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +34,7 @@
   <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
   <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
 </head>
-<body>
+<body class="container-fluid">
 <div class="row">
         <div class="col-md-12">
             <div class="jumbotron hero-technology">

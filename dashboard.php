@@ -13,22 +13,83 @@ if(!isset($_SESSION['fullname'])){
     $_SESSION['report'] = '0';
     header('location: login.php');
 }*/
+$eType = $_SESSION['eType'];
 include_once "resource/Database.php";
 
 $var = "dash";
 
-$sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' ORDER BY dcall_id ASC";
-$statement = $db->prepare($sql);
-$statement->execute();
-$statement2 = $db->prepare($sql);
-$statement2->execute();
+if(isset($eType)){
+    switch ($eType) {
+        case "General":
+        $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' ORDER BY dcall_id ASC";
+        $statement = $db->prepare($sql);
+        $statement->execute();
+        $statement2 = $db->prepare($sql);
+        $statement2->execute();
 
+        $query = 'SELECT COUNT(*) FROM distress_call;';
+        $sql_query = $db->prepare($query);
+        $sql_query->execute();
+        $data = $sql_query->fetchAll();
+        $len = $data[0]['COUNT(*)'];
+        break;
 
-$query = 'SELECT COUNT(*) FROM distress_call;';
-$sql_query = $db->prepare($query);
-$sql_query->execute();
-$data = $sql_query->fetchAll();
-$len = $data[0]['COUNT(*)'];
+        case "Fire":
+            $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' & dcall_type = 'Fire' ORDER BY dcall_id ASC";
+            $statement = $db->prepare($sql);
+            $statement->execute();
+            $statement2 = $db->prepare($sql);
+            $statement2->execute();
+        
+            $query = "SELECT COUNT(*) FROM distress_call WHERE dcall_type = 'Fire'";
+            $sql_query = $db->prepare($query);
+            $sql_query->execute();
+            $data = $sql_query->fetchAll();
+            $len = $data[0]['COUNT(*)'];
+        break;
+        
+        case "Security":
+        $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' & dcall_type = 'Security' ORDER BY dcall_id ASC";
+        $statement = $db->prepare($sql);
+        $statement->execute();
+        $statement2 = $db->prepare($sql);
+        $statement2->execute();
+    
+        $query = "SELECT COUNT(*) FROM distress_call WHERE dcall_type = 'Security'";
+        $sql_query = $db->prepare($query);
+        $sql_query->execute();
+        $data = $sql_query->fetchAll();
+        $len = $data[0]['COUNT(*)'];
+        break;
+        
+        case "Health":
+        $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' & dcall_type = 'Health' ORDER BY dcall_id ASC";
+        $statement = $db->prepare($sql);
+        $statement->execute();
+        $statement2 = $db->prepare($sql);
+        $statement2->execute();
+    
+        $query = "SELECT COUNT(*) FROM distress_call WHERE dcall_type = 'Health'";
+        $sql_query = $db->prepare($query);
+        $sql_query->execute();
+        $data = $sql_query->fetchAll();
+        $len = $data[0]['COUNT(*)'];
+        break;
+    }
+}
+else{
+    $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' ORDER BY dcall_id ASC";
+    $statement = $db->prepare($sql);
+    $statement->execute();
+    $statement2 = $db->prepare($sql);
+    $statement2->execute();
+
+    $query = 'SELECT COUNT(*) FROM distress_call;';
+    $sql_query = $db->prepare($query);
+    $sql_query->execute();
+    $data = $sql_query->fetchAll();
+    $len = $data[0]['COUNT(*)'];
+}
 
 $msg = $_SESSION['message'];
 $rep = $_SESSION['report'];

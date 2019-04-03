@@ -47,13 +47,14 @@ switch ($pageId) {
                 $email = $_POST['mail'];
                 $phone = $_POST['tel'];
                 $SID = $_POST['SID'];
+                $eType = $_POST['eType'];
 
                 $token = openssl_random_pseudo_bytes(16);
                 $token = bin2hex($token);
                 
                 try{
-                    $sqlInsert = "INSERT INTO admin (admin_id, admin_fname, admin_lname, admin_phone, admin_email, password, activated)
-                                    VALUES  (:sid, :fName, :lName, :phone, :email, :password, :token) ";
+                    $sqlInsert = "INSERT INTO admin (admin_id, admin_fname, admin_lname, admin_phone, admin_email, password, activated, eType)
+                                    VALUES  (:sid, :fName, :lName, :phone, :email, :password, :token, :eType)";
 
                     $statement = $db->prepare($sqlInsert);
                     $statement->execute( array(
@@ -63,7 +64,8 @@ switch ($pageId) {
                         ':password' => $pass,
                         ':email' => $email, 
                         ':phone' => $phone,
-                        ':token' => $token
+                        ':token' => $token,
+                        ':eType' => $eType
                     ));
 
                     if($statement->rowcount()==1){ # ie if one row is changed theb ...
@@ -434,6 +436,11 @@ switch ($pageId) {
                         ':dcall_time' => $time,
                         ':dcall_status' => $status
                     ));
+
+		     $_SESSION['long'] = $dcall_lng;
+		     $_SESSION['lat'] = $dcall_lat;
+		     $_SESSION['tel'] = $phone;
+		     $_SESSION['time'] = $time;
 
                     header('location: reply.php');
 

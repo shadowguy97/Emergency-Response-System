@@ -23,6 +23,7 @@ if (isset($_POST['username']) && $_POST['password']){
                 if($pass == $password){
                     //user exist and can proceed futher.
                     $_SESSION['fullname'] = $row['admin_fname'];
+                    $_SESSION['eType'] = $row['eType'];
                     header('location: ../dashboard.php');
                 }
                 else{# no such user exists

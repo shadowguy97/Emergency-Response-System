@@ -74,6 +74,7 @@ function edit(n){
             $('#admin_phone'+i).prop('readonly', false);
             $('#admin_lname'+i).prop('readonly', false);
             $('#admin_email'+i).prop('readonly', false);
+            $('#eType'+i).prop('readonly', false);
             $("#sub"+i).prop('disabled',false);
             $("#sub"+i).removeClass('btn-disabled');
             $("#sub"+i).addClass('btn-success');
@@ -96,6 +97,7 @@ function cancel(n){
             $('#admin_class'+i).prop('readonly', true);
             $('#admin_phone'+i).prop('readonly', true);
             $('#admin_id'+i).prop('readonly', true);
+            $('#eType'+i).prop('readonly', true);
             $("#sub"+i).prop('disabled',true);
             $("#sub"+i).addClass('btn-disabled');
             $("#sub"+i).removeClass('btn-success');
@@ -135,6 +137,7 @@ function sub(n){
                 document.getElementById('admin_lname').value = document.getElementById('admin_lname'+i).value;
                 document.getElementById('admin_phone').value = document.getElementById('admin_phone'+i).value;
                 document.getElementById('admin_email').value = document.getElementById('admin_email'+i).value;
+                document.getElementById('eType').value = document.getElementById('eType'+i).value;
                 document.data_form.submit();
             };
         }
@@ -246,6 +249,7 @@ function sub(n){
                                     <input type="hidden" id='admin_lname' name='admin_lname' value=''>
                                     <input type="hidden" id='admin_phone' name='admin_phone' value=''>
                                     <input type="hidden" id='admin_email' name='admin_email' value=''>
+                                    <input type="hidden" id='eType' name='eType' value=''>
                                 </form>
                                 
                                 <form method="post" action="">
@@ -258,6 +262,7 @@ function sub(n){
                                                 <th> Admin Last Name </th>
                                                 <th> Phone Number </th>
                                                 <th> Email </th>
+                                                <th> Emergency Category </th>
                                                 <th> </th>
                                             </tr>
                                         </thead>
@@ -273,6 +278,7 @@ function sub(n){
                                                 <td><input class='form-control' id='admin_lname".$var."' name='admin_lname".$var."' value='".$stmt['admin_lname']. "' readonly='readonly'></td>
                                                 <td><input class='form-control' id='admin_phone".$var."' name='admin_phone".$var."' value='".$stmt['admin_phone']. "' readonly='readonly'></td>
                                                 <td><input class='form-control' id='admin_email".$var."' name='admin_email".$var."' value='".$stmt['admin_email']. "' readonly='readonly'></td>
+                                                <td><input class='form-control' id='eType".$var."' name='eType".$var."' value='".$stmt['eType']. "' readonly='readonly'></td>
                                                 <td> <button type='button' class='btn btn-group btn-group-sm btn-primary' onclick='edit(".$var.")'><i class='fa fa-pencil'></i></button>
                                                 <button class='btn btn-group btn-group-sm btn-disabled' type='button' onclick='sub(".$var.")' id='sub".$var."' name='sub".$var."' disabled='disabled'><i class='fa fa-save'></i></button>
                                                     <button class='btn btn-group btn-group-sm btn-disabled' type='button' id='can".$var."' name='can".$var."' disabled='disabled' onclick='cancel(".$var.")'><i class='fa fa-close'></i></button> 

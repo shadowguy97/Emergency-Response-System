@@ -145,6 +145,17 @@ if($Var_Id != 0){
             $("#load").hide();
             return false;
         }
+        if(document.adminForm.eType.value == "") {
+            try {
+            swal('Error', 'Please select a category', 'error');
+            } catch (err) {
+                alert( "Please select a category");
+            }
+            document.adminForm.eType.focus() ;
+            $("#sub").show();
+            $("#load").hide();
+            return false;
+        }
         if(document.adminForm.pass.value == "") {
             try {
             swal('Error', 'Please enter your password', 'error');
@@ -315,10 +326,25 @@ if($Var_Id != 0){
                                             <input class="form-control" type="password" id="rpass" name="rpass">
                                         </div>
                                     </div>
-                                    <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">Submit</button>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 label-column">
+                                            <label  for="eType"> Admin Category </label>
+                                        </div>
+                                        <div class="col-sm-6 input-column">
+                                        <select id="eType" name="eType" class="form-control">
+                                            <option value="General" > General </option>
+                                            <option value="Health"> Health </option>
+                                            <option value="Fire"> Fire </option>
+                                            <option value="Security"> Security </option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button type="submit" id="sub" name="sub" class="btn btn-danger btn-block">Submit</button>
                                         <div id="load" style="display: none" class="text-center">
                                             <img src="assets/img/loading.gif" alt="load">
                                         </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
