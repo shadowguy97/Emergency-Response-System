@@ -35,7 +35,7 @@ if(isset($eType)){
         break;
 
         case "Fire":
-            $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' & dcall_type = 'Fire' ORDER BY dcall_id ASC";
+            $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' AND dcall_type = 'Fire' ORDER BY dcall_id ASC";
             $statement = $db->prepare($sql);
             $statement->execute();
             $statement2 = $db->prepare($sql);
@@ -49,7 +49,7 @@ if(isset($eType)){
         break;
         
         case "Security":
-        $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' & dcall_type = 'Security' ORDER BY dcall_id ASC";
+        $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' AND dcall_type = 'Security' ORDER BY dcall_id ASC";
         $statement = $db->prepare($sql);
         $statement->execute();
         $statement2 = $db->prepare($sql);
@@ -63,7 +63,7 @@ if(isset($eType)){
         break;
         
         case "Health":
-        $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' & dcall_type = 'Health' ORDER BY dcall_id ASC";
+        $sql = "SELECT * FROM distress_call WHERE dcall_status = 'Unattended' AND dcall_type = 'Health' ORDER BY dcall_id ASC";
         $statement = $db->prepare($sql);
         $statement->execute();
         $statement2 = $db->prepare($sql);

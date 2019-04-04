@@ -7,13 +7,44 @@
 
  session_start(); 
  include_once "resource/Database.php";
+ $eType = $_SESSION['eType'];
 
 $var = "logs";
 
-$sql = "SELECT * FROM distress_call ORDER BY dcall_id ASC";
-$statement = $db->prepare($sql);
-$statement->execute();
+if(isset($eType)){
+    switch ($eType) {
+        case "General":
+            $sql = "SELECT * FROM distress_call ORDER BY dcall_id ASC";
+            $statement = $db->prepare($sql);
+            $statement->execute();
+        break;
 
+        case "Fire":
+            $sql = "SELECT * FROM distress_call WHERE dcall_type = 'Fire' ORDER BY dcall_id ASC";
+            $statement = $db->prepare($sql);
+            $statement->execute();
+        break;
+
+        case "Security":
+            $sql = "SELECT * FROM distress_call WHERE dcall_type = 'Security' ORDER BY dcall_id ASC";
+            $statement = $db->prepare($sql);
+            $statement->execute();
+        break;
+
+        case "Health":
+            $sql = "SELECT * FROM distress_call WHERE dcall_type = 'Health' ORDER BY dcall_id ASC";
+            $statement = $db->prepare($sql);
+            $statement->execute();
+        break;
+
+    }
+}
+
+else{
+    $sql = "SELECT * FROM distress_call ORDER BY dcall_id ASC";
+    $statement = $db->prepare($sql);
+    $statement->execute();
+}
 
 ?>
 
