@@ -10,12 +10,12 @@
 $username = 'root';
 $password = ''; */
 
-$dsn = 'mysql:host = us-cdbr-iron-east-03.cleardb.net; dbname=heroku_5ef1bac9c6ca945';
+$dsn = 'mysql:host = localhost;dbname=ems_db';
 $username = 'bd0f798143af87';
 $password = '1b916786';
 
-$host = 'localhost' ;
-$dbname = 'ems_db';
+$host = 'us-cdbr-iron-east-03.cleardb.net' ;
+$dbname = 'heroku_5ef1bac9c6ca945';
 
 try{  
     $db = new PDO($dsn,$username,$password);
