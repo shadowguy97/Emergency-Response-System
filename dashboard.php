@@ -7,12 +7,13 @@
 
 //insert function that reloads the page frequently. or find script that reloads the database as it is updated
  session_start();
-/*
+
 if(!isset($_SESSION['fullname'])){
     $_SESSION['message'] = "Please Login to access this page.";
     $_SESSION['report'] = '0';
     header('location: login.php');
-}*/
+}
+
 $eType = $_SESSION['eType'];
 include_once "resource/Database.php";
 

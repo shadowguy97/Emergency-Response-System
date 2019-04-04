@@ -9,6 +9,12 @@
  include_once "resource/Database.php";
  $eType = $_SESSION['eType'];
 
+if(!isset($_SESSION['fullname'])){
+    $_SESSION['message'] = "Please Login to access this page.";
+    $_SESSION['report'] = '0';
+    header('location: login.php');
+}
+
 $var = "logs";
 
 if(isset($eType)){

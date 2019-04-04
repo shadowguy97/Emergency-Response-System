@@ -1,0 +1,6 @@
+mysql://bd0f798143af87:1b916786@us-cdbr-iron-east-03.cleardb.net/heroku_5ef1bac9c6ca945?reconnect=true
+
+host: us-cdbr-iron-east-03.cleardb.net
+db name: heroku_5ef1bac9c6ca945
+db pass: 1b916786
+db username: bd0f798143af87
