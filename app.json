@@ -1,0 +1,24 @@
+{
+  "addons": [
+    "cleardb"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/php"
+    }
+  ],
+  "env": {
+    "CLEARDB_DATABASE_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "Emergency-Response-System",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
